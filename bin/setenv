@@ -1,0 +1,8 @@
+#!/bin/bash
+#### ==========================================================================
+export DEVELOPER_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+#### ==========================================================================
+export DEVELOPER_ENV_ARCH=$(echo $MACHTYPE|awk -F- '{print $1}')
+export DEVELOPER_ENV_MACH=$(echo $MACHTYPE|awk -F- '{print $2}')
+export DEVELOPER_ENV_OS=$(echo $MACHTYPE|awk -F- '{print $3}')
+#### ==========================================================================

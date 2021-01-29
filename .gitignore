@@ -2,3 +2,7 @@
 /git
 /tmp
 /etc/user.settings
+/eclipses
+/jvms
+/home/**/eclipse
+/home/**/java*

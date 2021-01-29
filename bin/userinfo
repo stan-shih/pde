@@ -1,0 +1,74 @@
+#!/bin/bash
+usage="$(basename "$0") [-sdh] -- setup user information
+
+    Option:
+        -h  show this help text
+        -s  setup user information
+        -d  delete user setting
+"
+###
+### Main Bash Script
+###
+userSettingFile=$DEV_HOME/etc/user.settings
+
+exportUserSetting() {
+    echo "export DEV_USER_ID=$INPUT_USER_ID" > $userSettingFile
+    echo "export DEV_USER_NAME='$INPUT_USER_NAME'" >> $userSettingFile
+    echo "export DEV_USER_EMAIL=$INPUT_USER_EMAIL" >> $userSettingFile
+    . $userSettingFile
+}
+
+main() {
+    if [ "$1" != '' ]; then
+        exportUserSetting
+        return
+    fi
+    ASK_FLAG=1
+    while [ $ASK_FLAG -eq 1 ]; do
+        echo -n "Please entry your user id: "
+        read INPUT_USER_ID
+        echo -n "Please entry your user name: "
+        read INPUT_USER_NAME
+        echo -n "Please entry your email: "
+        read INPUT_USER_EMAIL
+        echo "You have enter following user information:"
+        echo "  ID:    $INPUT_USER_ID"
+        echo "  Name:  $INPUT_USER_NAME"
+        echo "  Email: $INPUT_USER_EMAIL"
+        echo -n "Are those correct? [y/n] "
+        read -n 1 INPUT_USER_YN
+        echo
+        if [ "$INPUT_USER_YN" == 'y' ] || [ "$INPUT_USER_YN" == 'Y' ]; then
+            exportUserSetting
+            break
+        fi
+    done
+}
+
+while getopts 'hda:' option; do
+  case "$option" in
+    h) echo "$usage"
+       exit
+       ;;
+    d) delete $userSettingFile
+       exit
+       ;;
+    s) main $OPTARG
+       exit
+       ;;
+    :) printf "missing argument for -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+   \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+  esac
+done
+shift $((OPTIND - 1))
+if [ -f $userSettingFile ]; then
+    . $userSettingFile
+else
+    main
+fi

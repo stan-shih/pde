@@ -1,0 +1,9 @@
+#!/bin/bash
+DIR=$(cd `dirname $0`; pwd)
+if [ "$DIR" == "/usr/bin" ]; then
+    DIR=/iisi-developer
+fi
+. $DIR/bin/setenv $*
+if [ "$DEV_HOME" != '' ]; then
+    cd $DEV_HOME
+fi

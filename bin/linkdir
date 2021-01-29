@@ -1,0 +1,59 @@
+#!/bin/bash
+usage="$(basename "$0") [-h] TARGET LINK -- create link
+    For Windows, create a Directory Junction
+    For Unix, create symbolic link
+
+    Option:
+        -h  show this help text
+"
+
+while getopts 'h' option; do
+  case "$option" in
+    h) echo "$usage"
+       exit
+       ;;
+    :) printf "missing argument for -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+   \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+  esac
+done
+shift $((OPTIND - 1))
+###
+### Main Bash Script
+###
+# Check $WINDIR has value?
+windows() { [[ -n "$WINDIR" ]]; }
+
+TARGET=$1
+LINK=$2
+
+if [[ -z "$TARGET" ]]; then
+    # Link-checking mode.
+    if windows; then
+        fsutil reparsepoint query "$LINK" > /dev/null
+    else
+        [[ -h "$LINK" ]]
+    fi
+else
+    # Link-creation mode.
+    if windows; then
+        WINTARGET=${TARGET//\//\\}
+        WINLINK=${LINK//\//\\}
+        # Windows needs to be told if it's a directory or not. Infer that.
+        # Also: note that we convert `/` to `\`. In this case it's necessary.
+        if [[ -d "$TARGET" ]]; then
+            cmd <<< "mklink /J "$WINLINK" "$WINTARGET"" > /dev/null
+        else
+            cmd <<< "mklink "$WINLINK" "$WINTARGET"" > /dev/null
+        fi
+    else
+        # You know what? I think ln's parameters are backwards.
+        ln -s "$TARGET" "$LINK"
+    fi
+fi
+echo Set Link, Please Check OK?

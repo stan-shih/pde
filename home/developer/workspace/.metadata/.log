@@ -1,0 +1,30 @@
+!SESSION 2021-01-29 18:19:32.277 -----------------------------------------------
+eclipse.buildId=4.12.0.I20190605-1800
+java.version=1.8.0_232
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_TW
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.egit.core 1 0 2021-01-29 18:20:01.645
+!MESSAGE Using Apache MINA sshd as ssh client.
+!SESSION 2021-01-29 19:52:45.352 -----------------------------------------------
+eclipse.buildId=4.12.0.I20190605-1800
+java.version=1.8.0_232
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_TW
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.egit.core 1 0 2021-01-29 19:52:51.017
+!MESSAGE Using Apache MINA sshd as ssh client.
+!SESSION 2021-01-29 20:28:57.530 -----------------------------------------------
+eclipse.buildId=4.12.0.I20190605-1800
+java.version=1.8.0_271
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_TW
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.jee.product -data D:/iisi-developer/home/developer/workspace
+
+!ENTRY org.eclipse.egit.core 1 0 2021-01-29 20:28:59.931
+!MESSAGE Using Apache MINA sshd as ssh client.

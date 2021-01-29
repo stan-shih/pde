@@ -1,2 +1,28 @@
 #!/bin/bash
+usage="$(basename "$0") [-he] -- show information in developer
+
+    Option:
+        -h  show this help text
+        -e  error control
+"
+while getopts 'hs:' option; do
+  case "$option" in
+    h) echo "$usage"
+       exit
+       ;;
+    e) echo "Error Environment Configuration!!!"
+       exit 1
+       ;;
+    :) printf "missing argument for -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+   \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+  esac
+done
+shift $((OPTIND - 1))
 set | grep DEV_
+set | grep _HOME | grep -v DEV_

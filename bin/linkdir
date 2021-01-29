@@ -35,11 +35,16 @@ LINK=$2
 if [[ -z "$TARGET" ]]; then
     # Link-checking mode.
     if windows; then
-        fsutil reparsepoint query "$LINK" > /dev/null
+        fsutil reparsepoint query "$LINK"
     else
         [[ -h "$LINK" ]]
     fi
 else
+    if [ -h "$LINK" ]; then
+        unlink "$LINK"
+    elif [ -f "$LINK" ]; then
+        rm -rf $LINK
+    fi
     # Link-creation mode.
     if windows; then
         WINTARGET=${TARGET//\//\\}
@@ -56,4 +61,4 @@ else
         ln -s "$TARGET" "$LINK"
     fi
 fi
-echo Set Link, Please Check OK?
+ls -al $LINK

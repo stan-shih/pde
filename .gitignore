@@ -4,5 +4,4 @@
 /etc/user.settings
 /eclipses
 /jvms
-/home/**/eclipse
-/home/**/java*
+/home/**/

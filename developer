@@ -1,9 +1,13 @@
 #!/bin/bash
-DIR=$(cd `dirname $0`; pwd)
+DIR=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
 if [ "$DIR" == "/usr/bin" ]; then
     DIR=/iisi-developer
-fi
-. $DIR/bin/setenv $*
-if [ "$DEV_HOME" != '' ]; then
-    cd $DEV_HOME
+    cp -pf $DIR/developer /usr/bin/
+    echo "INFO: developer hook updated."
+    . $DIR/developer $*
+else
+    . $DIR/bin/setenv $*
+    if [ "$DEV_HOME" != '' ]; then
+        cd $DEV_HOME
+    fi
 fi

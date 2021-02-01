@@ -47,6 +47,13 @@ else
     fi
     # Link-creation mode.
     if windows; then
+        if [[ $TARGET =~ ^/[a-z]/* ]]; then
+            PREFIX=${TARGET:0:2}
+            TARGET=${TARGET/$PREFIX/}
+        fi
+        if [[ $TARGET =~ ^.*/ ]]; then
+            TARGET=${TARGET%/*}
+        fi
         WINTARGET=${TARGET//\//\\}
         WINLINK=${LINK//\//\\}
         # Windows needs to be told if it's a directory or not. Infer that.
@@ -61,4 +68,8 @@ else
         ln -s "$TARGET" "$LINK"
     fi
 fi
-ls -al $LINK
+if [ -h $LINK ]; then
+    ls -al $LINK
+else
+    echo "Create link is error!!!"
+fi

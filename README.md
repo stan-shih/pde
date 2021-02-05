@@ -6,19 +6,21 @@
 
 ## File System
 
-| Folder | Description          | 備註         |
-| :----: | :------------------- | :----------- |
-| bin    | Binaries             | 執行程式      |
-| dev    |
-| etc    | Configuration Files  | 儲放設定檔案  |
-| home   | Home Directories     | 各專案環境    |
-| lib    | Shared Libraries     |
-| media  |
-| mnt    |
-| opt    | Optional add-on Apps | 附加的應用程式 |
-| tmp    | Temporary Files      | 暫存資料夾     |
-| usr    | User Utilities and Applications |
-| var    | Variable Files       |
+| Folder  | Description          | 備註         |
+| :-----: | :------------------- | :----------- |
+| bin     | Binaries             | 執行程式      |
+| dev     |
+| eclipse | Store eclipse        | 放置各個版本  |
+| etc     | Configuration Files  | 儲放設定檔案  |
+| home    | Home Directories     | 各專案環境    |
+| lib     | Shared Libraries     |
+| media   |
+| mnt     |
+| opt     | Optional add-on Apps | 附加的應用程式 |
+| repos   | Repository           | 程式儲存庫     |
+| tmp     | Temporary Files      | 暫存資料夾     |
+| usr     | User Utilities and Applications |
+| var     | Variable Files       |
 
 ## Install Developer
 

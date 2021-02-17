@@ -16,20 +16,28 @@ if [ ! -d $BASE ]; then
     mkdir -p $BASE
     echo "Create base directory in the home ($BASE)."
     echo "Please setup java and eclipse"
+elif [ -f $BASE/bash.bashrc ]; then
+    source $BASE/bash.bashrc
 fi
 #### ==========================================================================
-export JAVA_HOME=$BASE/java
+if [ -z $JAVA_HOME ]; then
+    export JAVA_HOME=$BASE/java
+fi
 if [[ ! "$PATH" =~ $JAVA_HOME/bin ]]; then
     export PATH=$JAVA_HOME/bin:$PATH
 fi
 #### ==========================================================================
-export ECLIPSE_HOME=$BASE/eclipse
+if [ -z $ECLIPSE_HOME ]; then
+    export ECLIPSE_HOME=$BASE/eclipse
+fi
 if [[ ! "$PATH" =~ $ECLIPSE_HOME ]]; then
     export PATH=$ECLIPSE_HOME:$PATH
 fi
 #### ==========================================================================
 if [[ ! "$PATH" =~ $DEV_HOME/bin ]]; then
     export PATH=$DEV_HOME/bin:$PATH
+elif [[ ! "$PATH" =~ ^$DEV_HOME/bin ]]; then
+    export PATH=$DEV_HOME/bin:${PATH/}$DEV_HOME\/bin/}
 fi
 #### ==========================================================================
 . userinfo

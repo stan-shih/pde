@@ -48,19 +48,18 @@ else
     # Link-creation mode.
     if windows; then
         if [[ $TARGET =~ ^/[a-z]/* ]]; then
-            PREFIX=${TARGET:0:2}
+            PREFIX=${TARGET:0:1}
             TARGET=${TARGET/$PREFIX/}
-        fi
-        if [[ $TARGET =~ ^.*/ ]]; then
-            TARGET=${TARGET%/*}
         fi
         WINTARGET=${TARGET//\//\\}
         WINLINK=${LINK//\//\\}
         # Windows needs to be told if it's a directory or not. Infer that.
         # Also: note that we convert `/` to `\`. In this case it's necessary.
         if [[ -d "$TARGET" ]]; then
+            echo "mklink /J "$WINLINK" "$WINTARGET""
             cmd <<< "mklink /J "$WINLINK" "$WINTARGET"" > /dev/null
         else
+            echo "mklink "$WINLINK" "$WINTARGET""
             cmd <<< "mklink "$WINLINK" "$WINTARGET"" > /dev/null
         fi
     else

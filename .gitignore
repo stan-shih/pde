@@ -1,11 +1,10 @@
 .DS_Store
-/**/
 !/bin/
 !developer*
 /eclipses
 /etc/user.settings
 !/etc/
-/git
+/PortableGit
 !/home/developer/**/
 /home/**/
 /jvms

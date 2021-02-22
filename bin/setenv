@@ -35,11 +35,13 @@ if [[ ! "$PATH" =~ $ECLIPSE_HOME ]]; then
 fi
 #### ==========================================================================
 if [[ ! "$PATH" =~ $DEV_HOME/bin ]]; then
-    export PATH=$DEV_HOME:$DEV_HOME/bin:$PATH
+    export PATH=$DEV_HOME/bin:$DEV_HOME:$PATH
 elif [[ ! "$PATH" =~ ^$DEV_HOME/bin ]]; then
     # PATH reset the bin pathe
-    export PATH=$DEV_HOME:$DEV_HOME/bin:${PATH/}$DEV_HOME\/bin/}
+    export PATH=$DEV_HOME/bin:$DEV_HOME:${PATH/}$DEV_HOME\/bin/}
 fi
+#### ==========================================================================
+source $DEV_HOME/opt/applicationpath
 #### ==========================================================================
 . userinfo
 #### ==========================================================================

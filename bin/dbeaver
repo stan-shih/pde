@@ -1,0 +1,57 @@
+#!/bin/bash
+function install () {
+   curl -L -o $DEV_HOME/tmp/dbeaver.zip https://github.com/dbeaver/dbeaver/releases/download/7.3.3/dbeaver-ce-7.3.3-win32.win32.x86_64.zip
+   7za x -r -o$DEV_HOME/tmp/ $DEV_HOME/tmp/dbeaver.zip
+   if [ -d $DEV_HOME/tmp/dbeaver ]; then
+      rm -rf $DBEAVER_HOME
+      mv $DEV_HOME/tmp/dbeaver $DEV_HOME/opt/
+   fi
+}
+
+usage="$(basename "$0") [-hi] -- Dbeaver Application
+
+   Option:
+      -h  show this help text
+      -i  Install DBeaver
+"
+while getopts 'hi' option; do
+  case "$option" in
+   h) echo "$usage"
+      exit
+      ;;
+   i) echo "Install Dbeaver..."
+      install
+      exit
+      ;;
+   :) printf "missing argument for -%s\n" "$OPTARG" >&2
+      echo "$usage" >&2
+      exit 1
+      ;;
+   \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+      echo "$usage" >&2
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND - 1))
+####
+#### Main Script
+####
+if [ ! -d $DBEAVER_HOME ]; then
+   echo "Please install first.
+   
+   Execute: 
+            dbeaver -i"
+   exit 1
+fi
+if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
+   # Windows
+   start dbeaver.exe
+elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
+   # MacOS
+   echo "Can't Support!!!"
+elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
+   # Unix
+   echo "Can't Support!!!"
+fi
+

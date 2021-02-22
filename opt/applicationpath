@@ -1,0 +1,8 @@
+#!/bin/bash
+#### 7-Zip
+export PATH=$PATH:$DEV_HOME/opt/7zip
+#### DBeaver
+export DBEAVER_HOME=$DEV_HOME/opt/dbeaver
+if [[ ! "$PATH" =~ $DBEAVER_HOME ]]; then
+    export PATH=$PATH:$DBEAVER_HOME
+fi

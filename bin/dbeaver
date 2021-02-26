@@ -1,10 +1,20 @@
 #!/bin/bash
 function install () {
-   curl -L -o $DEV_HOME/tmp/dbeaver.zip https://github.com/dbeaver/dbeaver/releases/download/7.3.3/dbeaver-ce-7.3.3-win32.win32.x86_64.zip
-   7za x -r -o$DEV_HOME/tmp/ $DEV_HOME/tmp/dbeaver.zip
-   if [ -d $DEV_HOME/tmp/dbeaver ]; then
-      rm -rf $DBEAVER_HOME
-      mv $DEV_HOME/tmp/dbeaver $DEV_HOME/opt/
+   DBEAVER_DOWNLOAD_URL=https://github.com/dbeaver/dbeaver/releases/
+   if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
+      # Windows
+      installwin $DBEAVER_HOME dbeaver https://github.com/dbeaver/dbeaver/releases/download/7.3.5/dbeaver-ce-7.3.5-win32.win32.x86_64.zip
+   elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
+      # MacOS
+      DBEAVER_DOWNLOAD_URL=https://github.com/dbeaver/dbeaver/releases/download/7.3.5/dbeaver-ce-7.3.5-macos.dmg
+      curl -L -C -o $DEV_HOME/tmp/dbeaver.dmg $DBEAVER_DOWNLOAD_URL
+      MOUNT_POINT=$(hdiutil attach $DEV_HOME/tmp/dbeaver.dmg | grep Volumes | cut -f 3)
+      cp -prvf "$MOUNT_POINT"/DBeaver.app $INFINITY_DEV_HOME/opt/dbeaver
+      hdiutil detach "$MOUNT_POINT"
+   elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
+      # Unix
+      DBEAVER_DOWNLOAD_URL=https://github.com/dbeaver/dbeaver/releases/download/7.3.5/dbeaver-ce-7.3.5-linux.gtk.x86_64.tar.gz
+      echo "Can't support!!!"
    fi
 }
 
@@ -54,4 +64,3 @@ elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
    # Unix
    echo "Can't Support!!!"
 fi
-

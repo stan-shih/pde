@@ -19,13 +19,21 @@ lrwxrwxrwx 1 1510013 1049089 44 二月    4 15:41 java -> /d/developer/jvms/jdk-
 drwxr-xr-x 1 1510013 1049089  0 一月   29 21:33 workspace/
 ```
 
+### 可支援軟體或程式
+
+- 7Zip
+- DBeaver
+- Eclipse
+- Git
+- Java
+
 ## File System
 
 | Folder  | Description          | 備註         |
 | :-----: | :------------------- | :----------- |
 | bin     | Binaries             | 執行程式      |
 | dev     |
-| eclipse | Store eclipse        | 放置各個版本  |
+| eclipses | Store eclipse        | 放置各個版本  |
 | etc     | Configuration Files  | 儲放設定檔案  |
 | home    | Home Directories     | 各專案環境    |
 | lib     | Shared Libraries     |

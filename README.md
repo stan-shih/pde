@@ -59,6 +59,9 @@ drwxr-xr-x 1 1510013 1049089  0 一月   29 21:33 workspace/
 $ source developer <project-id>
 ```
 
+![Developer捷徑設定](https://i.imgur.com/BiwMhW9.png)
+
+
 ### MacOS
 
 開啟Terminal

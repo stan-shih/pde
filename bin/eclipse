@@ -1,5 +1,5 @@
 #!/bin/bash
-usage="$(basename "$0") [-sdh] -- eclipse
+usage="$(basename "$0") [-sh] -- eclipse application
 
     Option:
         -h  show this help text
@@ -10,11 +10,7 @@ while getopts 'hs:' option; do
     h) echo "$usage"
        exit
        ;;
-    d) delete $userSettingFile
-       exit
-       ;;
-    s) main $OPTARG
-       exit
+    s) linkdir $DEV_HOME/eclipses/$OPTARG $BASE/eclipse
        ;;
     :) printf "missing argument for -%s\n" "$OPTARG" >&2
        echo "$usage" >&2
@@ -46,9 +42,8 @@ if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
     $ECLIPSE_HOME/eclipse.exe -data $WORKSPACE_DIR $* > /dev/null 2>&1 &
 elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
     # MacOS
-    open -a $INFINITY_DEV_HOME/eclipse --args -data $WORKSPACE_DIR $* > /dev/null 2>&1 &
+    open -a $ECLIPSE_HOME --args -data $WORKSPACE_DIR $* > /dev/null 2>&1 &
 elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
     # Unix
     $ECLIPSE_HOME/eclipse -data $WORKSPACE_DIR $* > /dev/null 2>&1 &
 fi
-

@@ -1,0 +1,66 @@
+#!/bin/bash
+function install () {
+   INTELLIJ_DOWNLOAD_URL=https://www.jetbrains.com/idea/download/
+   if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
+      # Windows
+      installwin $INTELLIJ_HOME intellij https://download.jetbrains.com/idea/ideaIC-2020.3.2.win.zip
+   elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
+      # MacOS
+      INTELLIJ_DOWNLOAD_URL=
+      curl -L -C -o $DEV_HOME/tmp/dbeaver.dmg $INTELLIJ_DOWNLOAD_URL
+      MOUNT_POINT=$(hdiutil attach $DEV_HOME/tmp/dbeaver.dmg | grep Volumes | cut -f 3)
+      cp -prvf "$MOUNT_POINT"/DBeaver.app $INFINITY_DEV_HOME/opt/dbeaver
+      hdiutil detach "$MOUNT_POINT"
+   elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
+      # Unix
+      INTELLIJ_DOWNLOAD_URL=
+      echo "Can't support!!!"
+   fi
+}
+
+usage="$(basename "$0") [-hi] -- IntelliJ Application
+
+   Option:
+      -h  show this help text
+      -i  Install Application
+"
+while getopts 'hi' option; do
+  case "$option" in
+   h) echo "$usage"
+      exit
+      ;;
+   i) echo "Install IntelliJ..."
+      install
+      exit
+      ;;
+   :) printf "missing argument for -%s\n" "$OPTARG" >&2
+      echo "$usage" >&2
+      exit 1
+      ;;
+   \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+      echo "$usage" >&2
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND - 1))
+####
+#### Main Script
+####
+if [ ! -d $INTELLIJ_HOME ]; then
+   echo "Please install first.
+   
+   Execute: 
+            intellij -i"
+   exit 1
+fi
+if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
+   # Windows
+   start idea64.exe
+elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
+   # MacOS
+   echo "Can't Support!!!"
+elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
+   # Unix
+   echo "Can't Support!!!"
+fi

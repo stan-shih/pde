@@ -25,6 +25,7 @@ drwxr-xr-x 1 1510013 1049089  0 一月   29 21:33 workspace/
 - DBeaver
 - Eclipse
 - Git
+- IntelliJ
 - Java
 
 ## File System
@@ -79,6 +80,50 @@ $ source developer <project-id>
 ```
 
 > 若未輸入專案代碼，則會預設使用developer
+
+## Application
+
+GitBash支援指令啟動軟體
+
+### DBeaver
+
+```bash
+$ dbeaver
+dbeaver [-hi] -- Dbeaver Application
+
+   Option:
+      -h  show this help text
+      -i  Install DBeaver
+```
+
+### Eclipse
+
+```bash
+$ eclipse -h
+eclipse [-sh] -- eclipse application
+
+    Option:
+        -h  show this help text
+        -s  setup default eclipse
+```
+
+### IntelliJ
+
+```bash
+$ intellij -h
+intellij [-hi] -- IntelliJ Application
+
+   Option:
+      -h  show this help text
+      -i  Install Application
+```
+
+### Visual Studio Code
+
+```bash
+$ code
+```
+
 
 ## Feedback
 

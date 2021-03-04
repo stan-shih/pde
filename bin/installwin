@@ -1,19 +1,21 @@
 #!/bin/bash
-usage="$(basename "$0") [-ht] APPLICATION_HOME APPLICATION_SHORT_NAME DOWNLOAD_URL -- install application in Windows OS.
+usage="$(basename "$0") [-htr] APPLICATION_HOME APPLICATION_SHORT_NAME DOWNLOAD_URL -- install application in Windows OS.
 
     Option:
          -h  show this help text
          -t  Archive file type
          -r  Unzip to folder 
 "
-while getopts 'hrt:' option; do
+while getopts 'hrt:s:' option; do
   case "$option" in
     h) echo "$usage"
        exit
        ;;
-    r) UNZIP_FOLDER_FLAG=Y
+    r) UNZIP_FOLDER=Y
        ;;
     t) ARCHIVE_TYPE=$OPTARG
+       ;;
+    s) SRC_FOLDER=$OPTARG
        ;;
     :) printf "missing argument for -%s\n" "$OPTARG" >&2
        echo "$usage" >&2
@@ -29,17 +31,22 @@ shift $((OPTIND - 1))
 ####
 #### Main Script
 ####
+if [ "$1" == '' ]; then
+   exit 1;
+fi
 APPLICATION_HOME=$1
 APPLICATION_SHORT_NAME=$2
 DOWNLOAD_URL=$3
-UNZIP_FOLDER=""
-if [ "$UNZIP_FOLDER_FLAG" == "Y" ]; then
+if [ "$UNZIP_FOLDER" == "Y" ]; then
    UNZIP_FOLDER=$APPLICATION_SHORT_NAME
 fi
 curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.zip $DOWNLOAD_URL
 7za x -r -o$DEV_HOME/tmp/$UNZIP_FOLDER $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.zip
-if [ -d $DEV_HOME/tmp/$APPLICATION_SHORT_NAME ]; then
+if [ "$SRC_FOLDER" == '' ]; then
+   SRC_FOLDER=$APPLICATION_SHORT_NAME
+fi
+if [ -d $DEV_HOME/tmp/$SRC_FOLDER ]; then
    rm -rf $APPLICATION_HOME
-   mv $DEV_HOME/tmp/$APPLICATION_SHORT_NAME $DEV_HOME/opt/
+   mv $DEV_HOME/tmp/$SRC_FOLDER $DEV_HOME/opt/$APPLICATION_SHORT_NAME
 fi
 

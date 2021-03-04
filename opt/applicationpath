@@ -16,3 +16,8 @@ export VS_CODE_HOME=$DEV_HOME/opt/vscode
 if [[ ! "$PATH" =~ $VS_CODE_HOME ]]; then
     export PATH=$PATH:$VS_CODE_HOME
 fi
+#### FileZilla
+export FILEZILLA_HOME=$DEV_HOME/opt/filezilla
+if [[ ! "$PATH" =~ $FILEZILLA_HOME ]]; then
+    export PATH=$PATH:$FILEZILLA_HOME
+fi

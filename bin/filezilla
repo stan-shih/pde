@@ -1,0 +1,63 @@
+#!/bin/bash
+function install () {
+   FILEZILLA_DOWNLOAD_URL=https://filezilla-project.org/download.php
+   if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
+      # Windows
+      installwin -s FileZilla-3.52.2 $FILEZILLA_HOME filezilla https://download.filezilla-project.org/client/FileZilla_3.52.2_win64.zip
+   elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
+      # MacOS
+      FILEZILLA_DOWNLOAD_URL=
+      echo "Can't support!!!"
+   elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
+      # Unix
+      FILEZILLA_DOWNLOAD_URL=
+      echo "Can't support!!!"
+   fi
+}
+
+usage="$(basename "$0") [-hi] -- FileZilla Application
+
+   Option:
+      -h  show this help text
+      -i  Install FileZilla
+"
+while getopts 'hi' option; do
+  case "$option" in
+   h) echo "$usage"
+      exit
+      ;;
+   i) echo "Install FileZilla..."
+      install
+      exit
+      ;;
+   :) printf "missing argument for -%s\n" "$OPTARG" >&2
+      echo "$usage" >&2
+      exit 1
+      ;;
+   \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+      echo "$usage" >&2
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND - 1))
+####
+#### Main Script
+####
+if [ ! -d $FILEZILLA_HOME ]; then
+   echo "Please install first.
+   
+   Execute: 
+            filezilla -i"
+   exit 1
+fi
+if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
+   # Windows
+   start filezilla.exe
+elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
+   # MacOS
+   echo "Can't Support!!!"
+elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
+   # Unix
+   echo "Can't Support!!!"
+fi

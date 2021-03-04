@@ -1,10 +1,11 @@
 #!/bin/bash
-usage="$(basename "$0") [-htr] APPLICATION_HOME APPLICATION_SHORT_NAME DOWNLOAD_URL -- install application in Windows OS.
+usage="$(basename "$0") [-htrs] APPLICATION_HOME APPLICATION_SHORT_NAME DOWNLOAD_URL -- install application in Windows OS.
 
     Option:
          -h  show this help text
          -t  Archive file type
          -r  Unzip to folder 
+         -s  Unzip folder name
 "
 while getopts 'hrt:s:' option; do
   case "$option" in

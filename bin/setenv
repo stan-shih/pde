@@ -6,6 +6,12 @@ export DEV_ENV_ARCH=$(echo $MACHTYPE|awk -F- '{print $1}')
 export DEV_ENV_MACH=$(echo $MACHTYPE|awk -F- '{print $2}')
 export DEV_ENV_OS=$(echo $MACHTYPE|awk -F- '{print $3}')
 #### ==========================================================================
+if [[ -z $PATH_ORIGIN ]]; then
+    export PATH_ORIGIN=$PATH
+else
+    export PATH=$PATH_ORIGIN
+fi
+#### ==========================================================================
 if [ "$1" == '' ]; then
     export DEV_BASE=developer
 else

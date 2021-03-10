@@ -21,3 +21,8 @@ export FILEZILLA_HOME=$DEV_HOME/opt/filezilla
 if [[ ! "$PATH" =~ $FILEZILLA_HOME ]]; then
     export PATH=$PATH:$FILEZILLA_HOME
 fi
+#### Apache Ant
+export ANT_HOME=$DEV_HOME/opt/ant
+if [[ ! "$PATH" =~ $ANT_HOME ]]; then
+    export PATH=$PATH:$ANT_HOME/bin
+fi

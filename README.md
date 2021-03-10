@@ -81,6 +81,37 @@ $ source developer <project-id>
 
 > 若未輸入專案代碼，則會預設使用developer
 
+## Command
+
+說明developer特有指令
+
+### denv
+
+顯示developer環境變數
+
+```bash=
+$ denv -h
+denv [-he] -- show information in developer
+
+    Option:
+        -h  show this help text
+        -e  error control
+```
+
+### linkdir
+
+設定連結
+
+```bash=
+$ linkdir -h
+linkdir [-h] TARGET LINK -- create link
+    For Windows, create a Directory Junction
+    For Unix, create symbolic link
+
+    Option:
+        -h  show this help text
+```
+
 ## Application
 
 GitBash支援指令啟動軟體

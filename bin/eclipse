@@ -27,7 +27,7 @@ shift $((OPTIND - 1))
 ### Main Bash Script
 ###
 if [ $ECLIPSE_HOME == '' ]; then
-    devenv -e
+    errorenv
     exit 1
 fi
 if [ -z $WORKSPACE_DIR ]; then

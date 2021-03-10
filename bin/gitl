@@ -1,0 +1,4 @@
+#!/bin/bash
+GIT_LOG_COMMAND="git log --pretty=\"%h %H %ai %<(16,trunc)%an %ci %<(16,trunc)%cn %s\""
+echo "Execute > $GIT_LOG_COMMAND $*"
+git log --pretty="%h %H %ai %<(16,trunc)%an %ci %<(16,trunc)%cn %s" $*

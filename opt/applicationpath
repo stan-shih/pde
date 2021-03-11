@@ -12,9 +12,9 @@ if [[ ! "$PATH" =~ $INTELLIJ_HOME ]]; then
     export PATH=$PATH:$INTELLIJ_HOME
 fi
 #### Visual Studio Code
-export VS_CODE_HOME=$DEV_HOME/opt/vscode
-if [[ ! "$PATH" =~ $VS_CODE_HOME ]]; then
-    export PATH=$PATH:$VS_CODE_HOME/bin
+export VSCODE_HOME=$DEV_HOME/opt/vscode
+if [[ ! "$PATH" =~ $VSCODE_HOME ]]; then
+    export PATH=$PATH:$VSCODE_HOME/bin
 fi
 #### FileZilla
 export FILEZILLA_HOME=$DEV_HOME/opt/filezilla

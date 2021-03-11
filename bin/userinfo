@@ -72,3 +72,6 @@ if [ -f $userSettingFile ]; then
 else
     main
 fi
+if [ -f $DEV_HOME/etc/userapp.setting ]; then
+    source $DEV_HOME/etc/userapp.setting
+fi

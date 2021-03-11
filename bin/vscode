@@ -1,0 +1,54 @@
+#!/bin/bash
+function install () {
+   VSCODE_DOWNLOAD_URL=https://code.visualstudio.com/download
+   if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
+      # Windows
+      installwin -r $VSCODE_HOME vscode https://az764295.vo.msecnd.net/stable/f30a9b73e8ffc278e71575118b6bf568f04587c8/VSCode-win32-x64-1.54.1.zip
+   elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
+      # MacOS
+      VSCODE_DOWNLOAD_URL=
+      echo "Can't support!!!"
+   elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
+      # Unix
+      VSCODE_DOWNLOAD_URL=
+      echo "Can't support!!!"
+   fi
+}
+
+usage="$(basename "$0") [-hi] -- Visual Studio Code Application
+
+   Option:
+      -h  show this help text
+      -i  Install Visual Studio Code
+"
+while getopts 'hi' option; do
+  case "$option" in
+   h) echo "$usage"
+      exit
+      ;;
+   i) echo "Install Visual Studio Code..."
+      install
+      exit
+      ;;
+   :) printf "missing argument for -%s\n" "$OPTARG" >&2
+      echo "$usage" >&2
+      exit 1
+      ;;
+   \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+      echo "$usage" >&2
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND - 1))
+####
+#### Main Script
+####
+if [ ! -d $VSCODE_HOME ]; then
+   echo "Please install first.
+   
+   Execute: 
+            vscode -i"
+   exit 1
+fi
+code $*

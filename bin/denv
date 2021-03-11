@@ -10,7 +10,7 @@ error="
     Please execute:
                      source developer <id>"
 
-while getopts 'hs:' option; do
+while getopts 'he' option; do
   case "$option" in
     h) echo "$usage"
        exit

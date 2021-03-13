@@ -1,16 +1,15 @@
 #!/bin/bash
 function install () {
-   VSCODE_DOWNLOAD_URL=https://code.visualstudio.com/download
+   # download url: https://code.visualstudio.com/download
+   # Chrome develop network copy link address
    if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
       # Windows
-      installwin -r $VSCODE_HOME vscode https://az764295.vo.msecnd.net/stable/f30a9b73e8ffc278e71575118b6bf568f04587c8/VSCode-win32-x64-1.54.1.zip
+      installapp -r $VSCODE_HOME vscode https://az764295.vo.msecnd.net/stable/f30a9b73e8ffc278e71575118b6bf568f04587c8/VSCode-win32-x64-1.54.1.zip
    elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
       # MacOS
-      VSCODE_DOWNLOAD_URL=
-      echo "Can't support!!!"
+      installapp -s "Visual Studio Code.app" $VSCODE_HOME vscode https://az764295.vo.msecnd.net/stable/fd6f3bce6709b121a895d042d343d71f317d74e7/VSCode-darwin-universal.zip
    elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
       # Unix
-      VSCODE_DOWNLOAD_URL=
       echo "Can't support!!!"
    fi
 }
@@ -51,4 +50,13 @@ if [ ! -d $VSCODE_HOME ]; then
             vscode -i"
    exit 1
 fi
-code $*
+if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
+  # Windows
+  code $*
+elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
+  # MacOS
+  open -a "$DEV_HOME/opt/vscode/Visual Studio Code.app"
+elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
+  # Unix
+  echo "Can't support!!!"
+fi

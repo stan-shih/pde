@@ -3,7 +3,7 @@ function install () {
    INTELLIJ_DOWNLOAD_URL=https://www.jetbrains.com/idea/download/
    if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
       # Windows
-      installwin -r $INTELLIJ_HOME intellij https://download.jetbrains.com/idea/ideaIC-2020.3.2.win.zip
+      installapp -r $INTELLIJ_HOME intellij https://download.jetbrains.com/idea/ideaIC-2020.3.2.win.zip
    elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
       # MacOS
       INTELLIJ_DOWNLOAD_URL=

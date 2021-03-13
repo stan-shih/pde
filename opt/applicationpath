@@ -25,9 +25,9 @@ if [[ ! "$PATH" =~ $DBEAVER_HOME ]]; then
     export PATH=$PATH:$DBEAVER_HOME
 fi
 #### IntelliJ
-export INTELLIJ_HOME=$DEV_HOME/opt/intellij/bin
+export INTELLIJ_HOME=$DEV_HOME/opt/intellij
 if [[ ! "$PATH" =~ $INTELLIJ_HOME ]]; then
-    export PATH=$PATH:$INTELLIJ_HOME
+    export PATH=$PATH:$INTELLIJ_HOME/bin
 fi
 #### Visual Studio Code
 export VSCODE_HOME=$DEV_HOME/opt/vscode

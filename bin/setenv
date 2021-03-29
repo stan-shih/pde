@@ -22,6 +22,8 @@ if [ ! -d $BASE ]; then
     mkdir -p $BASE
     echo "Create base directory in the home ($BASE)."
     echo "Please setup java and eclipse"
+    touch $BASE/bash.bashrc
+    chmod +x $BASE/bash.bashrc
 elif [ -f $BASE/bash.bashrc ]; then
     source $BASE/bash.bashrc
 fi

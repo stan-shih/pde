@@ -3,7 +3,7 @@ function install () {
    FILEZILLA_DOWNLOAD_URL=https://filezilla-project.org/download.php
    if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
       # Windows
-      installwin -s FileZilla-3.52.2 $FILEZILLA_HOME filezilla https://download.filezilla-project.org/client/FileZilla_3.52.2_win64.zip
+      installapp -s FileZilla-3.52.2 $FILEZILLA_HOME filezilla https://download.filezilla-project.org/client/FileZilla_3.52.2_win64.zip
    elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
       # MacOS
       FILEZILLA_DOWNLOAD_URL=

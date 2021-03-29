@@ -1,8 +1,25 @@
 #!/bin/bash
-DIR=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
-cp -pf $DIR/developer /usr/bin/dev
-echo "INFO: developer hook updated."
-if [ "$DIR" == "/usr/bin" ]; then
+if [[ "$SHELL" =~ bin/zsh ]]; then
+    echo "Can't support!!!"
+fi
+if [[ "$(uname)" = "Darwin" ]]; then
+    # Mac OS X
+    DIR=$(pwd)
+elif [[ "$(expr substr $(uname -s) 1 5)" = "Linux" ]] ; then
+    # GNU/Linux
+    echo Linux
+elif [[ "$(expr substr $(uname -s) 1 10)" = "MINGW32_NT" ]] ; then
+    # Windows NT
+    DIR=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
+    if [ -e $DIR/developer ]; then
+        cp -pf $DIR/developer /usr/bin/dev
+        echo "INFO: developer hook updated."
+    fi
+fi
+if [ ! -n $DIR ]; then
+    echo "Can't support!!!"
+fi
+if [[ "$DIR" == "/usr/bin" ]]; then
     DIR=/iisi-developer
     . $DIR/developer $*
 else
@@ -11,3 +28,4 @@ else
         cd $DEV_HOME
     fi
 fi
+

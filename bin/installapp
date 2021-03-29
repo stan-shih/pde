@@ -1,0 +1,73 @@
+#!/bin/bash
+usage="$(basename "$0") [-htrsa] APPLICATION_HOME APPLICATION_SHORT_NAME DOWNLOAD_URL -- install application in Windows OS.
+
+    Option:
+         -h  show this help text
+         -t  Archive file type
+         -r  Unzip to folder 
+         -s  Unzip folder name
+         -a  Create folder
+"
+while getopts 'hart:s:' option; do
+  case "$option" in
+    h) echo "$usage"
+       exit
+       ;;
+    r) UNZIP_FOLDER=Y
+       ;;
+    t) ARCHIVE_TYPE=$OPTARG
+       ;;
+    s) SRC_FOLDER=$OPTARG
+       ;;
+    a) MKDIR_FOLDER=Y
+       ;;
+    :) printf "missing argument for -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+   \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+  esac
+done
+shift $((OPTIND - 1))
+####
+#### Main Script
+####
+if [ "$1" == '' ]; then
+   exit 1;
+fi
+APPLICATION_HOME=$1
+APPLICATION_SHORT_NAME=$2
+DOWNLOAD_URL=$3
+if [ "$UNZIP_FOLDER" == "Y" ]; then
+   UNZIP_FOLDER=$APPLICATION_SHORT_NAME
+fi
+if [ "$ARCHIVE_TYPE" == '' ]; then
+   ARCHIVE_TYPE=zip
+fi
+if [[ "$ARCHIVE_TYPE" == "zip" ]]; then
+   curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.zip $DOWNLOAD_URL
+   7za x -r -o$DEV_HOME/tmp/$UNZIP_FOLDER $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.zip
+   if [ "$SRC_FOLDER" == '' ]; then
+      SRC_FOLDER=$APPLICATION_SHORT_NAME
+   fi
+   if [ -d "$DEV_HOME/tmp/$SRC_FOLDER" ]; then
+      rm -rf $APPLICATION_HOME
+      if [ "$MKDIR_FOLDER" == "Y" ]; then
+         mkdir -p $APPLICATION_HOME
+      fi
+      mv "$DEV_HOME/tmp/$SRC_FOLDER" $DEV_HOME/opt/$APPLICATION_SHORT_NAME
+   fi
+elif [[ "$ARCHIVE_TYPE" == "dmg" ]]; then
+   curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.dmg $DOWNLOAD_URL
+   MOUNT_POINT=$(hdiutil attach $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.dmg | grep Volumes | cut -f 3)
+   if [ -d "$MOUNT_POINT/$SRC_FOLDER" ]; then
+      rm -rf $APPLICATION_HOME
+      mkdir -p $APPLICATION_HOME
+      cp -prvf "$MOUNT_POINT/$SRC_FOLDER" $DEV_HOME/opt/$APPLICATION_SHORT_NAME
+   fi
+   hdiutil detach "$MOUNT_POINT"
+fi
+

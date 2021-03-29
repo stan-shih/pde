@@ -1,18 +1,7 @@
 #!/bin/bash
 function install () {
-   ANT_DOWNLOAD_URL=https://archive.apache.org/dist/ant/
-   if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
-      # Windows
-      installwin -s apache-ant-1.10.9 $ANT_HOME ant https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.9-bin.zip
-   elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
-      # MacOS
-      ANT_DOWNLOAD_URL=
-      echo "Can't support!!!"
-   elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
-      # Unix
-      ANT_DOWNLOAD_URL=
-      echo "Can't support!!!"
-   fi
+   # Download URL: https://archive.apache.org/dist/ant/
+   installapp -s apache-ant-1.10.9 $ANT_HOME ant https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.9-bin.zip
 }
 
 usage="$(basename "$0") [-hi] -- Apache Ant Application

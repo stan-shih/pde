@@ -116,6 +116,16 @@ linkdir [-h] TARGET LINK -- create link
 
 GitBash支援指令啟動軟體
 
+### Apache Ant
+
+```bash=
+ant [-hi] -- Apache Ant Application
+
+   Option:
+      -h  show this help text
+      -i  Install Application
+```
+
 ### DBeaver
 
 ```bash
@@ -152,7 +162,11 @@ intellij [-hi] -- IntelliJ Application
 ### Visual Studio Code
 
 ```bash
-$ code
+vscode [-hi] -- Visual Studio Code Application
+
+   Option:
+      -h  show this help text
+      -i  Install Visual Studio Code
 ```
 
 

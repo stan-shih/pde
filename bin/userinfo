@@ -1,5 +1,5 @@
 #!/bin/bash
-usage="$(basename "$0") [-sdh] -- setup user information
+usage="$(basename "$0") [-hsd] -- setup user information
 
     Option:
         -h  show this help text
@@ -45,7 +45,7 @@ main() {
     done
 }
 
-while getopts 'hda:' option; do
+while getopts 'hds:' option; do
   case "$option" in
     h) echo "$usage"
        exit
@@ -68,10 +68,12 @@ while getopts 'hda:' option; do
 done
 shift $((OPTIND - 1))
 if [ -f $userSettingFile ]; then
-    . $userSettingFile
+    souerce $userSettingFile
 else
     main
 fi
+git config --global user.name "$DEV_USER_NAME"
+git config --global user.email "$DEV_USER_EMAIL"
 if [ -f $DEV_HOME/etc/userapp.setting ]; then
     source $DEV_HOME/etc/userapp.setting
 fi

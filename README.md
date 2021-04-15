@@ -140,12 +140,14 @@ dbeaver [-hi] -- Dbeaver Application
 ### Eclipse
 
 ```bash
-$ eclipse -h
-eclipse [-sh] -- eclipse application
+eclipse [-hs] <ECLIPSE_VERSION> -- Eclipse application
 
     Option:
         -h  show this help text
-        -s  setup default eclipse
+        -s  setup default Eclipse
+
+    Parameter:
+        ECLIPSE_VERSION   Eclipse folder name in eclipses
 ```
 
 ### IntelliJ

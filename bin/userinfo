@@ -68,7 +68,7 @@ while getopts 'hds:' option; do
 done
 shift $((OPTIND - 1))
 if [ -f $userSettingFile ]; then
-    souerce $userSettingFile
+    source $userSettingFile
 else
     main
 fi

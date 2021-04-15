@@ -22,11 +22,13 @@ drwxr-xr-x 1 1510013 1049089  0 一月   29 21:33 workspace/
 ### 可支援軟體或程式
 
 - 7Zip
+- Apache Ant
 - DBeaver
 - Eclipse
 - Git
 - IntelliJ
 - Java
+- Visual Studio Code
 
 ## File System
 
@@ -112,7 +114,7 @@ linkdir [-h] TARGET LINK -- create link
         -h  show this help text
 ```
 
-## Application
+## Additional Applications
 
 GitBash支援指令啟動軟體
 

@@ -1,16 +1,20 @@
 #!/bin/bash
-usage="$(basename "$0") [-sh] -- eclipse application
+usage="$(basename "$0") [-hs] <ECLIPSE_VERSION> -- Eclipse application
 
     Option:
         -h  show this help text
-        -s  setup default eclipse
+        -s  setup default Eclipse
+    
+    Parameter:
+        ECLIPSE_VERSION   Eclipse folder name in eclipses
 "
 while getopts 'hs:' option; do
   case "$option" in
     h) echo "$usage"
        exit
        ;;
-    s) linkdir $DEV_HOME/eclipses/$OPTARG $BASE/eclipse
+    s) 
+       linkdir $DEV_HOME/eclipses/$OPTARG $BASE/eclipse
        ;;
     :) printf "missing argument for -%s\n" "$OPTARG" >&2
        echo "$usage" >&2
@@ -27,7 +31,15 @@ shift $((OPTIND - 1))
 ### Main Bash Script
 ###
 if [ $ECLIPSE_HOME == '' ]; then
-    errorenv
+    deve -e
+    exit 1
+fi
+if [ ! -d $ECLIPSE_HOME ]; then
+    echo "Please setup default Eclipse version first.
+   
+   Execute: 
+            eclipse -s <eclipse>"
+    ls -al $DEV_HOME/eclipses
     exit 1
 fi
 if [ -z $WORKSPACE_DIR ]; then

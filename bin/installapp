@@ -48,8 +48,10 @@ if [ "$ARCHIVE_TYPE" == '' ]; then
    ARCHIVE_TYPE=zip
 fi
 if [[ "$ARCHIVE_TYPE" == "zip" ]]; then
+   set -x
    curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.zip $DOWNLOAD_URL
    7za x -r -o$DEV_HOME/tmp/$UNZIP_FOLDER $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.zip
+   set +x
    if [ "$SRC_FOLDER" == '' ]; then
       SRC_FOLDER=$APPLICATION_SHORT_NAME
    fi

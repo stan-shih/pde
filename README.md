@@ -28,6 +28,7 @@ drwxr-xr-x 1 1510013 1049089  0 一月   29 21:33 workspace/
 - Git
 - IntelliJ
 - Java
+- Maven
 - Visual Studio Code
 
 ## File System
@@ -120,7 +121,8 @@ GitBash支援指令啟動軟體
 
 ### Apache Ant
 
-```bash=
+```bash
+$ ant -h
 ant [-hi] -- Apache Ant Application
 
    Option:
@@ -131,7 +133,7 @@ ant [-hi] -- Apache Ant Application
 ### DBeaver
 
 ```bash
-$ dbeaver
+$ dbeaver -h
 dbeaver [-hi] -- Dbeaver Application
 
    Option:
@@ -142,6 +144,7 @@ dbeaver [-hi] -- Dbeaver Application
 ### Eclipse
 
 ```bash
+$ eclipse -h
 eclipse [-hs] <ECLIPSE_VERSION> -- Eclipse application
 
     Option:
@@ -163,9 +166,21 @@ intellij [-hi] -- IntelliJ Application
       -i  Install Application
 ```
 
+### Maven
+
+```bash
+$ mvn -h
+mvn [-hi] -- Apache Maven Application
+
+   Option:
+      -h  show this help text
+      -i  Install Application
+```
+
 ### Visual Studio Code
 
 ```bash
+$ vscode -h
 vscode [-hi] -- Visual Studio Code Application
 
    Option:

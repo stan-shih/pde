@@ -1,0 +1,51 @@
+#!/bin/bash
+function install () {
+   # Download URL: https://maven.apache.org/download.cgi
+   installapp -t zip -s apache-maven-3.8.1 $MAVEN_HOME maven https://downloads.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.zip
+   ###
+   ### Setup Local Repository
+   ###
+   cp $MAVEN_HOME/conf/settings.xml $MAVEN_HOME/conf/settings.xml.bk
+   insertLineNumber="$(grep -n "<\!-- localRepository" $MAVEN_HOME/conf/settings.xml | awk -F':' '{print $1}')"
+   LOCALREPOSITORY=$MAVEN_HOME/.m2/repository
+   if [[ -n "$WINDIR" ]]; then
+      LOCALREPOSITORY="$(cd $MAVEN_HOME && pwd -W)/.m2/repository"
+   fi
+   if [[ ! -z $insertLineNumber ]]; then
+      sed -i $insertLineNumber"i<localRepository>$LOCALREPOSITORY</localRepository>" $MAVEN_HOME/conf/settings.xml
+      cp $MAVEN_HOME/conf/settings.xml ~/.m2/settings.xml
+   fi
+}
+
+usage="$(basename "$0") [-hi] -- Apache Maven Application
+
+   Option:
+      -h  show this help text
+      -i  Install Application
+"
+while [ $# -gt 0 ]; do
+  case "$1" in
+   -h) echo "$usage"
+      echo "Native Command >>> "
+      $MAVEN_HOME/bin/mvn $*
+      exit
+      ;;
+   -i) echo "Install Apache Maven..."
+      install
+      exit
+      ;;
+   (*) break
+      ;;
+  esac
+done
+####
+#### Main Script
+####
+if [ ! -d $MAVEN_HOME ]; then
+   echo "Please install first.
+   
+   Execute: 
+            mvn -i"
+   exit 1
+fi
+$MAVEN_HOME/bin/mvn $*

@@ -9,5 +9,6 @@
 /home/**/
 /jvms
 /opt/**/
+/opt/*.exe
 /repos/**/
 /tmp

@@ -52,6 +52,7 @@ else
     # Link-creation mode.
     if windows; then
         WINTARGET=$(cd $TARGET && pwd -W | sed -e 's/\//\\/g')
+        WINLINK=$LINK
         if [[ $LINK =~ "$DEV_HOME" ]]; then
             WINDEVHOME=$(cd $DEV_HOME && pwd -W)
             WINLINK=$(echo "${LINK/$DEV_HOME/$WINDEVHOME}" | sed -e 's/\//\\/g')

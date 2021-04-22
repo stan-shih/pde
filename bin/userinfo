@@ -11,14 +11,14 @@ usage="$(basename "$0") [-hsd] -- setup user information
 ###
 userSettingFile=$DEV_HOME/etc/user.settings
 
-exportUserSetting() {
+function exportUserSetting () {
     echo "export DEV_USER_ID=$INPUT_USER_ID" > $userSettingFile
     echo "export DEV_USER_NAME='$INPUT_USER_NAME'" >> $userSettingFile
     echo "export DEV_USER_EMAIL=$INPUT_USER_EMAIL" >> $userSettingFile
     . $userSettingFile
 }
 
-main() {
+function main () {
     if [ "$1" != '' ]; then
         exportUserSetting
         return
@@ -45,7 +45,7 @@ main() {
     done
 }
 
-while getopts 'hds:' option; do
+while getopts 'hds' option; do
   case "$option" in
     h) echo "$usage"
        exit
@@ -53,7 +53,7 @@ while getopts 'hds:' option; do
     d) delete $userSettingFile
        exit
        ;;
-    s) main $OPTARG
+    s) main
        exit
        ;;
     :) printf "missing argument for -%s\n" "$OPTARG" >&2
@@ -77,3 +77,4 @@ git config --global user.email "$DEV_USER_EMAIL"
 if [ -f $DEV_HOME/etc/userapp.setting ]; then
     source $DEV_HOME/etc/userapp.setting
 fi
+git config --global --list | grep user

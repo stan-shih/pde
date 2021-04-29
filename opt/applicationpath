@@ -50,3 +50,8 @@ export M2_HOME=$DEV_HOME/opt/maven
 if [[ ! "$PATH" =~ $MAVEN_HOME ]]; then
     export PATH=$PATH:$MAVEN_HOME/bin
 fi
+#### Sublime
+export SUBLIME_HOME=$DEV_HOME/opt/sublime
+if [[ ! "$PATH" =~ $SUBLIME_HOME ]]; then
+    export PATH=$PATH:$SUBLIME_HOME
+fi

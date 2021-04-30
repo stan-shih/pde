@@ -1,4 +1,14 @@
 #!/bin/bash
+function git_branch {
+   branch="`git branch 2>/dev/null | grep "^\*" | sed -e "s/^\*\ //"`"
+   if [ "${branch}" != "" ];then
+       if [ "${branch}" = "(no branch)" ];then
+           branch="(`git rev-parse --short HEAD`...)"
+       fi
+       echo " ($branch)"
+   fi
+}
+
 PS1='\[\033]0;$TITLEPREFIX:$PWD\007\]' # set window title
 PS1="$PS1"'\n'                 # new line
 PS1="$PS1"'\[\033[32m\]'       # change to green
@@ -20,6 +30,9 @@ then
         PS1="$PS1"'\[\033[36m\]'  # change color to cyan
         PS1="$PS1"'`__git_ps1`'   # bash function
     fi
+fi
+if [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
+    PS1="$PS1"' \[\033[36m\]$(git_branch)'
 fi
 PS1="$PS1"'\[\033[0m\]'        # change color
 PS1="$PS1"' $DEV_BASE\n'       # new line

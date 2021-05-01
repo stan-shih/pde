@@ -1,0 +1,36 @@
+#!/bin/bash
+usage="$(basename "$0") [-hl] -- Install AdoptOpenJDK
+
+    Option:
+        -h  Show this help text
+"
+while getopts 'h' option; do
+  case "$option" in
+    h) echo "$usage"
+       exit
+       ;;
+    :) printf "missing argument for -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+   \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+  esac
+done
+shift $((OPTIND - 1))
+####
+#### Main Script
+####
+set -x
+curl -L -o $DEV_HOME/tmp/eclipse.dmg https://ftp.jaist.ac.jp/pub/eclipse/technology/epp/downloads/release/2021-03/R/eclipse-jee-2021-03-R-macosx-cocoa-x86_64.dmg
+MOUNT_POINT=$(hdiutil attach $DEV_HOME/tmp/eclipse.dmg | grep Volumes | cut -f 3)
+set +x
+if [ -d "$MOUNT_POINT/Eclipse.app" ]; then
+   set -x
+   rm -rf $DEV_HOME/eclipses/eclipse-jee-2021-03-R-macosx-cocoa-x86_64.app
+   cp -r $MOUNT_POINT/Eclipse.app $DEV_HOME/eclipses/eclipse-jee-2021-03-R-macosx-cocoa-x86_64.app
+   hdiutil detach "$MOUNT_POINT"
+   set +x
+fi

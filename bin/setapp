@@ -1,0 +1,49 @@
+#!/bin/bash
+usage="$(basename "$0") [-hl] <APPLICATION_TYPE> <APPLICATION_VERSION> -- setup default application
+
+   Option:
+        -h  Show this help text
+        -l  List installed jvm
+
+   Parameter:
+         APPLICATION_TYPE      eclipse or java
+         APPLICATION_VERSION   folder name in eclipses or jvms
+"
+while getopts 'hl:' option; do
+   case "$option" in
+      h) echo "$usage"
+         exit
+         ;;
+      l) if [ "$OPTARG" == "java" ]; then
+            ls -al $DEV_HOME/jvms
+         elif [ "$OPTARG" == "eclipse" ]; then
+            ls -al $DEV_HOME/eclipses
+         else
+            echo "$usage"
+            exit 1
+         fi
+         exit
+         ;;
+      :) printf "missing argument for -%s\n" "$OPTARG" >&2
+         echo "$usage" >&2
+         exit 1
+         ;;
+      \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+          echo "$usage" >&2
+          exit 1
+          ;;
+   esac
+done
+shift $((OPTIND - 1))
+####
+#### Main Script
+####
+if [ "$1" == "java" ]; then
+   linkdir $DEV_HOME/jvms/$2 $BASE/java
+elif [ "$1" == "eclipse" ]; then
+   eclipse -s $2
+else
+   echo "$usage"
+   exit 1
+fi
+

@@ -1,0 +1,36 @@
+#!/bin/bash
+usage="$(basename "$0") [-hl] -- Install AdoptOpenJDK
+
+    Option:
+        -h  Show this help text
+"
+while getopts 'h' option; do
+  case "$option" in
+    h) echo "$usage"
+       exit
+       ;;
+    :) printf "missing argument for -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+   \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+       echo "$usage" >&2
+       exit 1
+       ;;
+  esac
+done
+shift $((OPTIND - 1))
+####
+#### Main Script
+####
+set -x
+curl -L -o $DEV_HOME/tmp/openjdk.tar https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u292-b10/OpenJDK8U-jdk_x64_mac_hotspot_8u292b10.tar.gz
+rm -rf $DEV_HOME/tmp/jdk8u292-b10
+tar xzf $DEV_HOME/tmp/openjdk.tar
+set +x
+if [[ -d $DEV_HOME/tmp/jdk8u292-b10 ]]; then
+   set -x
+   rm -rf $DEV_HOME/jvms/openjdk8u292-b10_macos
+   mv $DEV_HOME/tmp/jdk8u292-b10 $DEV_HOME/jvms/openjdk8u292-b10_macos
+   set +x
+fi

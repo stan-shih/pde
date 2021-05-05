@@ -1,5 +1,5 @@
 #!/bin/bash
-usage="$(basename "$0") [-he] -- show information in developer
+usage="$(basename -- "$0") [-he] -- show information in developer
 
     Option:
         -h  show this help text

@@ -1,5 +1,5 @@
 #!/bin/bash
-usage="$(basename "$0") [-hl] -- Install AdoptOpenJDK
+usage="$(basename -- "$0") [-hl] -- Install AdoptOpenJDK
 
     Option:
         -h  Show this help text

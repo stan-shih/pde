@@ -14,7 +14,7 @@ function install () {
    fi
 }
 
-usage="$(basename "$0") [-hi] -- Visual Studio Code Application
+usage="$(basename -- "$0") [-hi] -- Visual Studio Code Application
 
    Option:
       -h  show this help text

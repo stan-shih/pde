@@ -15,7 +15,7 @@ function install () {
    fi
 }
 
-usage="$(basename "$0") [-hi] -- FileZilla Application
+usage="$(basename -- "$0") [-hi] -- FileZilla Application
 
    Option:
       -h  show this help text

@@ -17,7 +17,7 @@ function install () {
    fi
 }
 
-usage="$(basename "$0") [-hi] -- Apache Maven Application
+usage="$(basename -- "$0") [-hi] -- Apache Maven Application
 
    Option:
       -h  show this help text

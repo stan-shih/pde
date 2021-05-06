@@ -4,7 +4,7 @@ if [[ "$SHELL" =~ bin/zsh ]]; then
 fi
 if [[ "$(uname)" = "Darwin" ]]; then
     # Mac OS X
-    DIR=$(pwd)
+    DIR=$(cd "$(dirname "${BASH_ARGV[0]}")"; pwd)
 elif [[ "$(expr substr $(uname -s) 1 5)" = "Linux" ]] ; then
     # GNU/Linux
     echo Linux

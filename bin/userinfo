@@ -1,5 +1,5 @@
 #!/bin/bash
-usage="$(basename "$0") [-hsd] -- setup user information
+usage="$(basename -- "$0") [-hsd] -- setup user information
 
     Option:
         -h  show this help text

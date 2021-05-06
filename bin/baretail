@@ -5,7 +5,7 @@ function install () {
    curl -L -o $DEV_HOME/opt/baretail.exe http://www.baremetalsoft.com/baretail/download.php?p=m
 }
 
-usage="$(basename "$0") [-hi] -- BareTail Application
+usage="$(basename -- "$0") [-hi] -- BareTail Application
 
    Option:
       -h  show this help text

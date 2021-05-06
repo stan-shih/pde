@@ -1,5 +1,5 @@
 #!/bin/bash
-usage="$(basename "$0") [-h] TARGET LINK -- create link
+usage="$(basename -- "$0") [-h] TARGET LINK -- create link
     For Windows, create a Directory Junction
     For Unix, create symbolic link
 

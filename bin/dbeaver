@@ -22,7 +22,7 @@ function install () {
    fi
 }
 
-usage="$(basename "$0") [-hi] -- Dbeaver Application
+usage="$(basename -- "$0") [-hi] -- Dbeaver Application
 
    Option:
       -h  show this help text

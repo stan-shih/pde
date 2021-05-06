@@ -21,7 +21,7 @@ function install () {
    fi
 }
 
-usage="$(basename "$0") [-hi] -- Sublime Application
+usage="$(basename -- "$0") [-hi] -- Sublime Application
 
    Option:
       -h  show this help text

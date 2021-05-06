@@ -1,5 +1,5 @@
 #!/bin/bash
-usage="$(basename "$0") [-htrsa] APPLICATION_HOME APPLICATION_SHORT_NAME DOWNLOAD_URL -- install application in Windows OS.
+usage="$(basename -- "$0") [-htrsa] APPLICATION_HOME APPLICATION_SHORT_NAME DOWNLOAD_URL -- install application in Windows OS.
 
     Option:
          -h  show this help text

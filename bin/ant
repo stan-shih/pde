@@ -4,7 +4,7 @@ function install () {
    installapp -s apache-ant-1.10.9 $ANT_HOME ant https://archive.apache.org/dist/ant/binaries/apache-ant-1.10.9-bin.zip
 }
 
-usage="$(basename "$0") [-hi] -- Apache Ant Application
+usage="$(basename -- "$0") [-hi] -- Apache Ant Application
 
    Option:
       -h  show this help text

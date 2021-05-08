@@ -6,7 +6,7 @@
 
 ## 特色
 
-因應各自專案需要特定的Eclipse及JDK版本，將版本放置eclipses, jvms資料夾內，透過link方式建立連結，並放在專案代碼家目錄下(路徑為developer\home\<project-id>)，以test-proj當範例如下所示
+因應各自專案需要特定的Eclipse及JDK版本，將版本放置eclipses, jvms資料夾內，透過Symbolic Link方式建立連結，並放在專案代碼家目錄下(路徑為 **developer\home\<project-id>** )，以下將以test-proj當範例:
 
 > 若專案有設定環境變數的需求，可以在專案代碼家目錄下建立bash.bashrc的執行檔，當設定專案代碼時，Bash會自動執行bash.bashrc
 
@@ -51,10 +51,15 @@ drwxr-xr-x 1 1510013 1049089  0 一月   29 21:33 workspace/
 
 ## Install Developer
 
+安裝方式有以下方法:
+
 - 下載壓縮檔
 > 透過GitHub下載zip檔案，並解壓縮在電腦即可使用
 - 透過Git Command
-> 
+
+```
+$ git clone https://github.com/stanshih0315/developer.git
+```
 
 ## 開啟
 
@@ -64,7 +69,7 @@ drwxr-xr-x 1 1510013 1049089  0 一月   29 21:33 workspace/
 
 執行在Developer資料夾的`Developer.bat`檔案，即可啟動GitBash
 
-> 因為未帶入專案代碼，所以會使用預設專案代碼啟動
+> 因為未帶入專案代碼，所以會使用預設專案代碼(developer)啟動
 > 可以執行以下指令，設定專案代碼，或將`Developer.bat`建立捷徑，在 **目標** 欄位值後面加上一個空格及專案代碼，執行後將會自動設定專案代碼
 
 ```bash
@@ -79,6 +84,8 @@ $ source developer <project-id>
 開啟Terminal
 
 ```bash
+# 若developer安裝於家目錄下, 則執行以下指令; 若安裝至其他地方, 則切換目錄至developer資料夾
+$ cd ~/developer
 $ source developer <project-id>
 ```
 

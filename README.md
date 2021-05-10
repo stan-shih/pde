@@ -46,7 +46,7 @@ drwxr-xr-x 1 1510013 1049089  0 一月   29 21:33 workspace/
 | opt     | Optional add-on Apps | 附加的應用程式 |
 | repos   | Repository           | 程式儲存庫     |
 | tmp     | Temporary Files      | 暫存資料夾     |
-| usr     | User Utilities and Applications |
+| usr     | User Utilities and Applications | 使用者Binary Script |
 | var     | Variable Files       |
 
 ## Install Developer
@@ -195,6 +195,9 @@ vscode [-hi] -- Visual Studio Code Application
       -i  Install Visual Studio Code
 ```
 
+## User Binary Script
+
+使用者可以在developer/usr/local/bin資料夾存放Binary Script，developer啟動後會將developer/usr/local/bin加入PATH
 
 ## Feedback
 

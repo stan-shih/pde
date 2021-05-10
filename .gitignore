@@ -12,3 +12,4 @@
 /opt/*.exe
 /repos/**/
 /tmp
+/usr/local/bin/**

@@ -47,6 +47,9 @@ if [[ ! "$PATH" =~ $ECLIPSE_HOME ]]; then
     export PATH=$ECLIPSE_HOME:$PATH
 fi
 #### ==========================================================================
+if [[ ! "$PATH" =~ $DEV_HOME/usr/local/bin ]]; then
+    export PATH=$DEV_HOME/usr/local/bin:$PATH
+fi
 if [[ ! "$PATH" =~ $DEV_HOME/bin ]]; then
     export PATH=$DEV_HOME/bin:$DEV_HOME:$PATH
 elif [[ ! "$PATH" =~ ^$DEV_HOME/bin ]]; then

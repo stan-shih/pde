@@ -6,8 +6,7 @@ function install () {
       installapp -s FileZilla-3.52.2 $FILEZILLA_HOME filezilla https://download.filezilla-project.org/client/FileZilla_3.52.2_win64.zip
    elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
       # MacOS
-      FILEZILLA_DOWNLOAD_URL=
-      echo "Can't support!!!"
+      installapp -t tar.bz2 $FILEZILLA_HOME filezilla https://download.filezilla-project.org/client/FileZilla_3.52.2_macosx-x86.app.tar.bz2
    elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
       # Unix
       FILEZILLA_DOWNLOAD_URL=
@@ -56,7 +55,7 @@ if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
    start filezilla.exe
 elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
    # MacOS
-   echo "Can't Support!!!"
+   open -a FileZilla.app
 elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
    # Unix
    echo "Can't Support!!!"

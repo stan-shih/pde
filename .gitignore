@@ -6,7 +6,7 @@
 !/etc/
 /PortableGit
 !/home/developer/**/
-/home/**/
+/home/**
 /jvms
 /opt/**/
 /opt/*.exe

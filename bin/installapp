@@ -1,13 +1,22 @@
 #!/bin/bash
 usage="$(basename -- "$0") [-htrsa] APPLICATION_HOME APPLICATION_SHORT_NAME DOWNLOAD_URL -- install application in Windows OS.
 
-    Option:
+   Option:
          -h  show this help text
          -f  Install offline
          -t  Archive file type
          -r  Unzip to folder 
-         -s  Unzip folder name
+         -s  The folder name display in the tmp folder after decompressing the compressed file
          -a  Create folder
+
+   Example:
+         application.zip - bin
+                         - application.exe
+         $ installapp -t zip -r application https://xxx.application.xx/application-win-1.0.1.zip
+
+         application.zip - application-win-1.0.1 - bin
+                                                 - application.exe
+         $ installapp -t zip -s application-win-1.0.1 https://xxx.application.xx/application-win-1.0.1.zip
 "
 while getopts 'hfart:s:' option; do
   case "$option" in
@@ -80,5 +89,23 @@ elif [[ "$ARCHIVE_TYPE" == "tar.bz2" ]]; then
    [ "$OFFLINE" == '' ] && curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.tar.bz2 $DOWNLOAD_URL
    tar jxvf $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.tar.bz2
    set +x 
+elif [[ "$ARCHIVE_TYPE" == "tar.gz" ]]; then
+   set -x
+   [ "$OFFLINE" == '' ] && curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.tar.gz $DOWNLOAD_URL
+   if [ "$UNZIP_FOLDER" != '' ]; then
+      mkdir $DEV_HOME/tmp/$UNZIP_FOLDER
+   fi
+   tar zxvf $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.tar.gz --directory $DEV_HOME/tmp/$UNZIP_FOLDER
+   set +x
+   if [ "$SRC_FOLDER" == '' ]; then
+      SRC_FOLDER=$APPLICATION_SHORT_NAME
+   fi
+   if [ -d "$DEV_HOME/tmp/$SRC_FOLDER" ]; then
+      rm -rf $APPLICATION_HOME
+      if [ "$MKDIR_FOLDER" == "Y" ]; then
+         mkdir -p $APPLICATION_HOME
+      fi
+      mv "$DEV_HOME/tmp/$SRC_FOLDER" $DEV_HOME/opt/$APPLICATION_SHORT_NAME
+   fi
 fi
 

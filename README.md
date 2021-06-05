@@ -29,6 +29,7 @@ drwxr-xr-x 1 1510013 1049089  0 一月   29 21:33 workspace/
 - IntelliJ
 - Java
 - Maven
+- NodeJS
 - Visual Studio Code
 
 ## File System
@@ -36,13 +37,10 @@ drwxr-xr-x 1 1510013 1049089  0 一月   29 21:33 workspace/
 | Folder  | Description          | 備註         |
 | :-----: | :------------------- | :----------- |
 | bin     | Binaries             | 執行程式      |
-| dev     |
 | eclipses | Store eclipse        | 放置各個版本  |
 | etc     | Configuration Files  | 儲放設定檔案  |
 | home    | Home Directories     | 各專案環境    |
 | lib     | Shared Libraries     |
-| media   |
-| mnt     |
 | opt     | Optional add-on Apps | 附加的應用程式 |
 | repos   | Repository           | 程式儲存庫     |
 | tmp     | Temporary Files      | 暫存資料夾     |
@@ -55,6 +53,7 @@ drwxr-xr-x 1 1510013 1049089  0 一月   29 21:33 workspace/
 
 - 下載壓縮檔
 > 透過GitHub下載zip檔案，並解壓縮在電腦即可使用
+
 - 透過Git Command
 
 ```
@@ -63,7 +62,7 @@ $ git clone https://github.com/stanshih0315/developer.git
 
 ## 開啟
 
-由於Developer支援各個作業系統，所以啟動方式會依作業系統而有所不一致，以下將會分開介紹各作業系統的處理方式
+由於Developer支援各個作業系統，所以啟動方式會依作業系統而有所不一致，請依據所使用的作業系統進行以下操作
 
 ### Windows
 
@@ -171,6 +170,18 @@ intellij [-hi] -- IntelliJ Application
    Option:
       -h  show this help text
       -i  Install Application
+```
+
+### NodeJS
+
+```bash
+$ node -h
+node [-hi] -- NodeJS Application
+
+   Option:
+      -h  show this help text
+      -i  Install NodeJS
+      -f  Install NodeJS offline
 ```
 
 ### Maven

@@ -29,6 +29,21 @@ export INTELLIJ_HOME=$DEV_HOME/opt/intellij
 if [[ ! "$PATH" =~ $INTELLIJ_HOME ]]; then
     export PATH=$PATH:$INTELLIJ_HOME/bin
 fi
+#### NodeJS
+export NODEJS_HOME=$DEV_HOME/opt/nodejs
+if [[ ! "$PATH" =~ $NODEJS_HOME ]]; then
+    if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
+        # Windows
+        export PATH=$PATH:$NODEJS_HOME
+    elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
+        # MacOS
+        export PATH=$PATH:$NODEJS_HOME/bin
+        if [ -f "$NODEJS_HOME/bin/npm" ] && [ ! -f $HOME/.npmrc ]; then
+            mkdir -p $NODEJS_HOME/etc
+            cat $DEV_HOME/etc/npmrc | sed -e "s#\$DEV_HOME#$DEV_HOME#g" > $NODEJS_HOME/etc/npmrc
+        fi
+    fi
+fi
 #### Visual Studio Code
 export VSCODE_HOME=$DEV_HOME/opt/vscode
 if [[ ! "$PATH" =~ $VSCODE_HOME ]]; then

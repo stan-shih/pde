@@ -1,0 +1,3 @@
+cache=$DEV_HOME/opt/nodejs/cache
+; init-module=$DEV_HOME/etc/.npm-init.js
+userconfig=$DEV_HOME/etc/.npmrc

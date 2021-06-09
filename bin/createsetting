@@ -1,0 +1,56 @@
+#!/bin/bash
+SETTING_FILE=$BASE/bash.bashrc
+
+usage="$(basename -- "$0") [-hdgu] -- Create Setting File
+
+    Option:
+        -h  show this help text
+        -d  show setting file context
+        -g  Global Setting($DEV_HOME/etc/global.bashrc)
+        -u  Default: Project Setting under the home folder($BASE/bash.bashrc).
+"
+while getopts 'hdgu' option; do
+    case "$option" in
+        h)  echo "$usage"
+            exit
+            ;;
+        g)  SETTING_FILE=$DEV_HOME/etc/global.bashrc
+            ;;
+        u)  SETTING_FILE=$BASE/bash.bashrc
+            ;;
+        d)  DISPLAY=Y
+            ;;
+        :)  printf "missing argument for -%s\n" "$OPTARG" >&2
+            echo "$usage" >&2
+            exit 1
+            ;;
+        \?) printf "illegal option: -%s\n" "$OPTARG" >&2
+            echo "$usage" >&2
+            exit 1
+            ;;
+    esac
+done
+shift $((OPTIND - 1))
+####
+#### Main Script
+####
+if [ ! -f "$SETTING_FILE" ] && [ "$DISPLAY" == "Y" ]; then
+    echo $SETTING_FILE: No such setting file
+    exit 1
+fi
+if [ "$DISPLAY" == "Y" ]; then
+    cat $SETTING_FILE
+    exit 0
+fi
+
+if [ -f "$SETTING_FILE" ]; then
+    read -r -p "The setting file already exist, are you sure to overwrite it? [y/N] " response
+    response=${response,,}    # tolower
+else
+    response=y
+fi
+
+if [ "$response" == "y" ]; then
+    cp $DEV_HOME/etc/bashrc $SETTING_FILE
+    echo "Create Setting File($SETTING_FILE)."
+fi

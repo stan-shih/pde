@@ -17,6 +17,11 @@ if [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
     export DEV_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 fi
 #### ==========================================================================
+source $DEV_HOME/etc/default.bashrc
+if [ -f $DEV_HOME/etc/global.bashrc ]; then
+    source $DEV_HOME/etc/global.bashrc
+fi
+#### ==========================================================================
 if [[ "$1" == '' ]]; then
     export DEV_BASE=developer
 else
@@ -56,7 +61,7 @@ elif [[ ! "$PATH" =~ ^$DEV_HOME/bin ]]; then
     export PATH=$DEV_HOME/bin:$DEV_HOME:${PATH/}$DEV_HOME\/bin/}
 fi
 #### ==========================================================================
-source $DEV_HOME/opt/applicationpath
+source $DEV_HOME/etc/application.setting
 #### ==========================================================================
 source userinfo
 #### ==========================================================================

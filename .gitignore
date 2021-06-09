@@ -3,6 +3,7 @@
 !developer*
 /eclipses
 /etc/user.settings
+/etc/global.bashrc
 !/etc/
 /PortableGit
 !/home/developer/**/

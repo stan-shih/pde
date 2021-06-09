@@ -1,4 +1,9 @@
 #!/bin/bash
+function exportpath () {
+    if [[ ! "$PATH" =~ $1 ]]; then
+        export PATH=$PATH:$1$2
+    fi
+}
 #### 7-Zip
 if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
     export ZIP7_HOME=$DEV_HOME/opt/7zip
@@ -19,18 +24,17 @@ elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
         echo "brew install p7zip > Install p7zip OK"
     fi
 fi
+#### Apache Ant
+exportpath $ANT_HOME /bin
+#### Apache Maven
+exportpath $MAVEN_HOME /bin
 #### DBeaver
-export DBEAVER_HOME=$DEV_HOME/opt/dbeaver
-if [[ ! "$PATH" =~ $DBEAVER_HOME ]]; then
-    export PATH=$PATH:$DBEAVER_HOME
-fi
+exportpath $DBEAVER_HOME
+#### FileZilla
+exportpath $FILEZILLA_HOME
 #### IntelliJ
-export INTELLIJ_HOME=$DEV_HOME/opt/intellij
-if [[ ! "$PATH" =~ $INTELLIJ_HOME ]]; then
-    export PATH=$PATH:$INTELLIJ_HOME/bin
-fi
+exportpath $INTELLIJ_HOME /bin
 #### NodeJS
-export NODEJS_HOME=$DEV_HOME/opt/nodejs
 if [[ ! "$PATH" =~ $NODEJS_HOME ]]; then
     if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
         # Windows
@@ -45,28 +49,6 @@ if [[ ! "$PATH" =~ $NODEJS_HOME ]]; then
     fi
 fi
 #### Visual Studio Code
-export VSCODE_HOME=$DEV_HOME/opt/vscode
-if [[ ! "$PATH" =~ $VSCODE_HOME ]]; then
-    export PATH=$PATH:$VSCODE_HOME/bin
-fi
-#### FileZilla
-export FILEZILLA_HOME=$DEV_HOME/opt/filezilla
-if [[ ! "$PATH" =~ $FILEZILLA_HOME ]]; then
-    export PATH=$PATH:$FILEZILLA_HOME
-fi
-#### Apache Ant
-export ANT_HOME=$DEV_HOME/opt/ant
-if [[ ! "$PATH" =~ $ANT_HOME ]]; then
-    export PATH=$PATH:$ANT_HOME/bin
-fi
-#### Apache Maven
-export MAVEN_HOME=$DEV_HOME/opt/maven
-export M2_HOME=$DEV_HOME/opt/maven
-if [[ ! "$PATH" =~ $MAVEN_HOME ]]; then
-    export PATH=$PATH:$MAVEN_HOME/bin
-fi
+exportpath $VSCODE_HOME /bin
 #### Sublime
-export SUBLIME_HOME=$DEV_HOME/opt/sublime
-if [[ ! "$PATH" =~ $SUBLIME_HOME ]]; then
-    export PATH=$PATH:$SUBLIME_HOME
-fi
+exportpath $SUBLIME_HOME

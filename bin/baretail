@@ -1,8 +1,9 @@
 #!/bin/bash
 function install () {
    # Download URL: http://www.baremetalsoft.com/index.php
-   rm -f $DEV_HOME/opt/baretail.exe
-   curl -L -o $DEV_HOME/opt/baretail.exe http://www.baremetalsoft.com/baretail/download.php?p=m
+   rm -rf $BAREMETAL_HOME
+   mkdir -p $BAREMETAL_HOME
+   curl -L -o $BAREMETAL_HOME/baretail.exe http://www.baremetalsoft.com/baretail/download.php?p=m
 }
 
 usage="$(basename -- "$0") [-hi] -- BareTail Application
@@ -34,7 +35,7 @@ shift $((OPTIND - 1))
 ####
 #### Main Script
 ####
-if [ ! -f $DEV_HOME/opt/baretail.exe ]; then
+if [ ! -d $BAREMETAL_HOME ]; then
    echo "Please install BareTail first.
    
    Execute: 
@@ -43,7 +44,11 @@ if [ ! -f $DEV_HOME/opt/baretail.exe ]; then
 fi
 if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
    # Windows
-   start $DEV_HOME/opt/baretail.exe
+   if [ -f $BAREMETAL_HOME/baretailpro.exe ]; then
+      start $BAREMETAL_HOME/baretailpro.exe
+   else
+      start $BAREMETAL_HOME/baretail.exe
+   fi
 elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
    # MacOS
    echo "Can't Support!!!"

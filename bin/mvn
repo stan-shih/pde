@@ -6,14 +6,22 @@ function install () {
    ### Setup Local Repository
    ###
    cp $MAVEN_HOME/conf/settings.xml $MAVEN_HOME/conf/settings.xml.bk
-   insertLineNumber="$(grep -n "<\!-- localRepository" $MAVEN_HOME/conf/settings.xml | awk -F':' '{print $1}')"
    LOCALREPOSITORY=$MAVEN_HOME/.m2/repository
-   if [[ -n "$WINDIR" ]]; then
-      LOCALREPOSITORY="$(cd $MAVEN_HOME && pwd -W)/.m2/repository"
+   if [[ -f ~/.m2/settings.xml ]]; then
+      return
    fi
+   insertLineNumber="$(grep -n "<\!-- localRepository" $MAVEN_HOME/conf/settings.xml | awk -F':' '{print $1}')"
    if [[ ! -z $insertLineNumber ]]; then
-      sed -i $insertLineNumber"i<localRepository>$LOCALREPOSITORY</localRepository>" $MAVEN_HOME/conf/settings.xml
-      cp $MAVEN_HOME/conf/settings.xml ~/.m2/settings.xml
+      echo "Change default m2 repository path...($LOCALREPOSITORY)"
+      SED_LOCAL_REPOSITORY=$(echo $LOCALREPOSITORY | sed -e 's/\//\\/g')
+      if [[ -n "$WINDIR" ]]; then
+         LOCALREPOSITORY="$(cd $MAVEN_HOME && pwd -W)/.m2/repository"
+         sed -i ${insertLineNumber}"i<localRepository>$LOCALREPOSITORY</localRepository>" $MAVEN_HOME/conf/settings.xml
+         cp $MAVEN_HOME/conf/settings.xml ~/.m2/settings.xml
+      elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
+         # MacOS
+         sed 's/LOCALREPOSITORY/'"$(echo $MAVEN_HOME/.m2/repository | sed -e 's/\//\\\//g')"'/g' $DEV_HOME/etc/maven-3.8.1-settings.xml > ~/.m2/settings.xml
+      fi
    fi
 }
 

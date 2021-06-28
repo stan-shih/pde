@@ -6,7 +6,7 @@ function install () {
       installapp -s FileZilla-3.52.2 $FILEZILLA_HOME filezilla https://download.filezilla-project.org/client/FileZilla_3.52.2_win64.zip
    elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
       # MacOS
-      installapp -t tar.bz2 $FILEZILLA_HOME filezilla https://download.filezilla-project.org/client/FileZilla_3.52.2_macosx-x86.app.tar.bz2
+      installapp -t tar.bz2 -r $FILEZILLA_HOME filezilla https://download.filezilla-project.org/client/FileZilla_3.52.2_macosx-x86.app.tar.bz2
    elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
       # Unix
       FILEZILLA_DOWNLOAD_URL=

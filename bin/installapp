@@ -62,7 +62,7 @@ if [ "$ARCHIVE_TYPE" == '' ]; then
 fi
 if [[ "$ARCHIVE_TYPE" == "zip" ]]; then
    set -x
-   [ $OFFLINE == '' ] && curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.zip $DOWNLOAD_URL
+   [ "$OFFLINE" == '' ] && curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.zip $DOWNLOAD_URL
    7za x -r -o$DEV_HOME/tmp/$UNZIP_FOLDER $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.zip
    set +x
    if [ "$SRC_FOLDER" == '' ]; then
@@ -84,18 +84,13 @@ elif [[ "$ARCHIVE_TYPE" == "dmg" ]]; then
       cp -prvf "$MOUNT_POINT/$SRC_FOLDER" $DEV_HOME/opt/$APPLICATION_SHORT_NAME
    fi
    hdiutil detach "$MOUNT_POINT"
-elif [[ "$ARCHIVE_TYPE" == "tar.bz2" ]]; then
+elif [[ "$ARCHIVE_TYPE" == "tar.gz" ]] || [[ "$ARCHIVE_TYPE" == "tar.bz2" ]]; then
    set -x
-   [ "$OFFLINE" == '' ] && curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.tar.bz2 $DOWNLOAD_URL
-   tar jxvf $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.tar.bz2
-   set +x 
-elif [[ "$ARCHIVE_TYPE" == "tar.gz" ]]; then
-   set -x
-   [ "$OFFLINE" == '' ] && curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.tar.gz $DOWNLOAD_URL
+   [ "$OFFLINE" == '' ] && curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.$ARCHIVE_TYPE $DOWNLOAD_URL
    if [ "$UNZIP_FOLDER" != '' ]; then
       mkdir $DEV_HOME/tmp/$UNZIP_FOLDER
    fi
-   tar zxvf $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.tar.gz --directory $DEV_HOME/tmp/$UNZIP_FOLDER
+   tar zxvf $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.$ARCHIVE_TYPE --directory $DEV_HOME/tmp/$UNZIP_FOLDER
    set +x
    if [ "$SRC_FOLDER" == '' ]; then
       SRC_FOLDER=$APPLICATION_SHORT_NAME

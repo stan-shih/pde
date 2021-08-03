@@ -1,4 +1,8 @@
 #!/bin/bash
+####
+#### alias
+####
+alias gitl='git log --pretty="%h %H %ai %<(16,trunc)%an %ci %<(16,trunc)%cn %s"'
 
 ####
 #### Apache Ant

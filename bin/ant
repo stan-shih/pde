@@ -10,6 +10,13 @@ usage="$(basename -- "$0") [-hi] -- Apache Ant Application
       -h  show this help text
       -i  Install Application
 "
+
+if [ -d $ANT_HOME ]; then
+   shift $((OPTIND - 1))
+   $ANT_HOME/bin/ant $*
+   exit 0
+fi
+
 while getopts 'hi' option; do
   case "$option" in
    h) echo "$usage"
@@ -29,7 +36,7 @@ while getopts 'hi' option; do
       ;;
   esac
 done
-shift $((OPTIND - 1))
+
 ####
 #### Main Script
 ####
@@ -40,4 +47,4 @@ if [ ! -d $ANT_HOME ]; then
             ant -i"
    exit 1
 fi
-$ANT_HOME/bin/ant $*
+

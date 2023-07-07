@@ -4,7 +4,11 @@ function install () {
    # Chrome develop network copy link address
    if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
       # Windows
-      installapp -r $VSCODE_HOME vscode https://az764295.vo.msecnd.net/stable/f30a9b73e8ffc278e71575118b6bf568f04587c8/VSCode-win32-x64-1.54.1.zip
+      if [ "$1" == '' ]; then
+         installapp -r $VSCODE_HOME vscode https://az764295.vo.msecnd.net/stable/f30a9b73e8ffc278e71575118b6bf568f04587c8/VSCode-win32-x64-1.54.1.zip
+      else
+         installapp -f -r $VSCODE_HOME vscode $1
+      fi
    elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
       # MacOS
       installapp -a -s "Visual Studio Code.app" $VSCODE_HOME vscode https://az764295.vo.msecnd.net/stable/fd6f3bce6709b121a895d042d343d71f317d74e7/VSCode-darwin-universal.zip
@@ -20,13 +24,13 @@ usage="$(basename -- "$0") [-hi] -- Visual Studio Code Application
       -h  show this help text
       -i  Install Visual Studio Code
 "
-while getopts 'hi' option; do
+while getopts 'hi:' option; do
   case "$option" in
    h) echo "$usage"
       exit
       ;;
    i) echo "Install Visual Studio Code..."
-      install
+      install $OPTARG
       exit
       ;;
    :) printf "missing argument for -%s\n" "$OPTARG" >&2

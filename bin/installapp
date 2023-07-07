@@ -57,25 +57,44 @@ if [ "$UNZIP_FOLDER" == "Y" ]; then
    UNZIP_FOLDER=$APPLICATION_SHORT_NAME
    rm -rf $DEV_HOME/tmp/$UNZIP_FOLDER
 fi
+###
+### Setting archive type to zip  
+###
 if [ "$ARCHIVE_TYPE" == '' ]; then
    ARCHIVE_TYPE=zip
 fi
 if [[ "$ARCHIVE_TYPE" == "zip" ]]; then
+   ###
+   ### Archive Type: zip
+   ###
    set -x
-   [ "$OFFLINE" == '' ] && curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.zip $DOWNLOAD_URL
-   7za x -r -o$DEV_HOME/tmp/$UNZIP_FOLDER $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.zip
+   # Download zip from URL while mode is online
+   if [ "$OFFLINE" == '' ]; then
+      curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.zip $DOWNLOAD_URL
+      SRC_FOLDER_WITH_PATH=$DEV_HOME/tmp/$APPLICATION_SHORT_NAME.zip
+   else
+      SRC_FOLDER_WITH_PATH=$DOWNLOAD_URL
+   fi
+   7za x -r -o$DEV_HOME/tmp/$UNZIP_FOLDER "$SRC_FOLDER_WITH_PATH"
    set +x
    if [ "$SRC_FOLDER" == '' ]; then
       SRC_FOLDER=$APPLICATION_SHORT_NAME
    fi
    if [ -d "$DEV_HOME/tmp/$SRC_FOLDER" ]; then
       rm -rf $APPLICATION_HOME
+      if [ "$?" != "0" ]; then
+         echo "Can not install application!!! Please check program is running."
+         exit 1
+      fi
       if [ "$MKDIR_FOLDER" == "Y" ]; then
          mkdir -p $APPLICATION_HOME
       fi
       mv "$DEV_HOME/tmp/$SRC_FOLDER" $DEV_HOME/opt/$APPLICATION_SHORT_NAME
    fi
 elif [[ "$ARCHIVE_TYPE" == "dmg" ]]; then
+   ###
+   ### Archive Type: dmg
+   ###
    [ "$OFFLINE" == '' ] && curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.dmg $DOWNLOAD_URL
    MOUNT_POINT=$(hdiutil attach $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.dmg | grep Volumes | cut -f 3)
    if [ -d "$MOUNT_POINT/$SRC_FOLDER" ]; then
@@ -85,6 +104,9 @@ elif [[ "$ARCHIVE_TYPE" == "dmg" ]]; then
    fi
    hdiutil detach "$MOUNT_POINT"
 elif [[ "$ARCHIVE_TYPE" == "tar.gz" ]] || [[ "$ARCHIVE_TYPE" == "tar.bz2" ]]; then
+   ###
+   ### Archive Type: tar.gz, tar.bz2
+   ###
    set -x
    [ "$OFFLINE" == '' ] && curl -L -o $DEV_HOME/tmp/$APPLICATION_SHORT_NAME.$ARCHIVE_TYPE $DOWNLOAD_URL
    if [ "$UNZIP_FOLDER" != '' ]; then

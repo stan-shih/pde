@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "Setup Environment..."
 #### ==========================================================================
 export DEV_ENV_ARCH=$(echo $MACHTYPE|awk -F- '{print $1}')
 export DEV_ENV_MACH=$(echo $MACHTYPE|awk -F- '{print $2}')
@@ -7,6 +8,7 @@ export DEV_ENV_OS=$(echo $MACHTYPE|awk -F- '{print $3}')
 if [[ -z $PATH_ORIGIN ]]; then
     export PATH_ORIGIN=$PATH
 else
+    #echo "PATH change: "$PATH_ORIGIN
     export PATH=$PATH_ORIGIN
 fi
 #### ==========================================================================
@@ -57,7 +59,7 @@ fi
 if [[ ! "$PATH" =~ $DEV_HOME/bin ]]; then
     export PATH=$DEV_HOME/bin:$DEV_HOME:$PATH
 elif [[ ! "$PATH" =~ ^$DEV_HOME/bin ]]; then
-    # PATH reset the bin pathe
+    # PATH reset the bin path
     export PATH=$DEV_HOME/bin:$DEV_HOME:${PATH/}$DEV_HOME\/bin/}
 fi
 #### ==========================================================================
@@ -73,6 +75,8 @@ fi
 if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]];then
     # Setup Git Bash Support Cmd Charset
     cmd //C "chcp 65001"
+    # Add gsudo to PATH
+    export PATH=$PATH:$DEV_HOME/opt/gsudo.portable/x64
 fi
 #### ==========================================================================
 source bashprompt
@@ -83,4 +87,6 @@ echo "--------------------------------------------------------------------------
 echo "This Bash has set alias list:"
 alias
 echo "---------------------------------------------------------------------------------------------------"
-
+if [[ "$1" == '' ]]; then
+    ls -al $DEV_HOME/home
+fi

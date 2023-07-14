@@ -8,7 +8,6 @@ export DEV_ENV_OS=$(echo $MACHTYPE|awk -F- '{print $3}')
 if [[ -z $PATH_ORIGIN ]]; then
     export PATH_ORIGIN=$PATH
 else
-    #echo "PATH change: "$PATH_ORIGIN
     export PATH=$PATH_ORIGIN
 fi
 #### ==========================================================================
@@ -20,13 +19,15 @@ if [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
 fi
 #### ==========================================================================
 source $DEV_HOME/etc/default.bashrc
+#### After setup default configuration, check global configuration
 if [ -f $DEV_HOME/etc/global.bashrc ]; then
     source $DEV_HOME/etc/global.bashrc
 fi
 #### ==========================================================================
-if [[ "$1" == '' ]]; then
-    export DEV_BASE=developer
-else
+export DEV_BASE=default
+export DEV_DEFAULT_BASE=$DEV_HOME/home/$DEV_BASE
+source $DEV_DEFAULT_BASE/bash.bashrc
+if [[ "$1" != '' ]]; then
     export DEV_BASE=$1
 fi
 export BASE=$DEV_HOME/home/$DEV_BASE
@@ -34,10 +35,8 @@ if [ ! -d $BASE ]; then
     mkdir -p $BASE
     echo "Create base directory in the home ($BASE)."
     echo "Please setup java and eclipse"
-    cp $DEV_HOME/etc/bashrc $BASE/bash.bashrc
-elif [ -f $BASE/bash.bashrc ]; then
-    source $BASE/bash.bashrc
 fi
+[ -f $BASE/bash.bashrc ] && source $BASE/bash.bashrc
 #### ==========================================================================
 if [ -z $JAVA_HOME ]; then
     export JAVA_HOME=$BASE/java

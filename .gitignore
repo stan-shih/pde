@@ -6,8 +6,9 @@
 /etc/global.bashrc
 !/etc/
 /PortableGit
-!/home/developer/**/
-/home/**
+!/home
+/home/**/
+!/home/default
 /jvms
 /opt/**/
 /opt/*.exe

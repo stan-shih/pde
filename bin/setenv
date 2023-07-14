@@ -45,13 +45,6 @@ if [[ ! "$PATH" =~ $JAVA_HOME/bin ]]; then
     export PATH=$JAVA_HOME/bin:$PATH
 fi
 #### ==========================================================================
-if [ -z $ECLIPSE_HOME ]; then
-    export ECLIPSE_HOME=$BASE/eclipse
-fi
-if [[ ! "$PATH" =~ $ECLIPSE_HOME ]]; then
-    export PATH=$ECLIPSE_HOME:$PATH
-fi
-#### ==========================================================================
 if [[ ! "$PATH" =~ $DEV_HOME/usr/local/bin ]]; then
     export PATH=$DEV_HOME/usr/local/bin:$PATH
 fi

@@ -31,7 +31,7 @@ then
         PS1="$PS1"'`__git_ps1`'   # bash function
     fi
 fi
-if [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
+if [[ "$(osIsMac)" == "Y" ]]; then
     PS1="$PS1"' \[\033[36m\]$(git_branch)'
 fi
 PS1="$PS1"'\[\033[0m\]'        # change color

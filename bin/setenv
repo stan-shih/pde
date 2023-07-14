@@ -1,9 +1,17 @@
 #!/bin/bash
-echo "Setup Environment..."
+echo "Setup Environment...($MACHTYPE)"
 #### ==========================================================================
 export DEV_ENV_ARCH=$(echo $MACHTYPE|awk -F- '{print $1}')
 export DEV_ENV_MACH=$(echo $MACHTYPE|awk -F- '{print $2}')
-export DEV_ENV_OS=$(echo $MACHTYPE|awk -F- '{print $3}')
+getEnvOS() {
+    echo $(echo $MACHTYPE|awk -F- '{print $3}')
+}
+osIsWindows() {
+    [[ $(getEnvOS) =~ ^msys.*$ ]] && echo "Y" || echo "N"
+}
+osIsMac() {
+    [[ $(getEnvOS) =~ ^darwin.*$ ]] && echo "Y" || echo "N"
+}
 #### ==========================================================================
 if [[ -z $PATH_ORIGIN ]]; then
     export PATH_ORIGIN=$PATH
@@ -11,11 +19,15 @@ else
     export PATH=$PATH_ORIGIN
 fi
 #### ==========================================================================
-if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
+if [[ $(osIsWindows) == "Y" ]]; then
     export DEV_HOME="$(cd "$(dirname $(readlink -f "${BASH_SOURCE[0]}"))/.." && pwd)"
 fi
-if [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
+if [[ $(osIsMac) == "Y" ]]; then
     export DEV_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+fi
+if [[ $DEV_HOME == '' ]]; then
+    echo "Can't setup Portable Development Environment!!!"
+    return
 fi
 #### ==========================================================================
 source $DEV_HOME/etc/default.bashrc

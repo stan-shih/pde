@@ -1,50 +1,33 @@
 #!/bin/bash
 ####
 #### alias
-####
 alias gitl='git log --pretty="%h %H %ai %<(16,trunc)%an %ci %<(16,trunc)%cn %s"'
-
 ####
-#### Apache Ant
-####
+#### Tools Home Path
+# Apache Ant
 export ANT_HOME=$DEV_HOME/opt/ant
-
-####
-#### Apache Maven
+#
+# Apache Maven
 export MAVEN_HOME=$DEV_HOME/opt/maven
 export M2_HOME=$DEV_HOME/opt/maven
-
-####
-#### BareTail
-####
+#
+# BareTail
 export BAREMETAL_HOME=$DEV_HOME/opt/baremetal
-
-####
-#### DBeaver
-####
+#
+# DBeaver
 export DBEAVER_HOME=$DEV_HOME/opt/dbeaver
-
-####
-#### FileZilla
-####
+#
+# FileZilla
 export FILEZILLA_HOME=$DEV_HOME/opt/filezilla
-
-####
-#### IntelliJ
-####
+#
+# IntelliJ
 export INTELLIJ_HOME=$DEV_HOME/opt/intellij
-
-####
-#### NodeJS
-####
+#
+# NodeJS
 export NODEJS_HOME=$DEV_HOME/opt/nodejs
-
-####
-#### Visual Studio Code
-####
+#
+# Visual Studio Code
 export VSCODE_HOME=$DEV_HOME/opt/vscode
-
-####
-#### Sublime
-####
+#
+# Sublime
 export SUBLIME_HOME=$DEV_HOME/opt/sublime

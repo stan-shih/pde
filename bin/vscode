@@ -1,35 +1,36 @@
 #!/bin/bash
 function install () {
-   # download url: https://code.visualstudio.com/download
-   # Chrome develop network copy link address
-   if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
-      # Windows
+   . $DEV_HOME/etc/vscode.conf
+   if [[ $OS_WINDOWS == "Y" ]]; then
       if [ "$1" == '' ]; then
-         installapp -r $VSCODE_HOME vscode https://az764295.vo.msecnd.net/stable/f30a9b73e8ffc278e71575118b6bf568f04587c8/VSCode-win32-x64-1.54.1.zip
+         installapp -r $VSCODE_HOME vscode $VSCODE_DOWNLOAD_URL_WINDOWS
       else
          installapp -f -r $VSCODE_HOME vscode $1
       fi
-   elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
-      # MacOS
-      installapp -a -s "Visual Studio Code.app" $VSCODE_HOME vscode https://az764295.vo.msecnd.net/stable/fd6f3bce6709b121a895d042d343d71f317d74e7/VSCode-darwin-universal.zip
-   elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
-      # Unix
+   elif [[ $OS_MACOS == "Y" ]]; then
+      installapp -a -s "Visual Studio Code.app" $VSCODE_HOME vscode $VSCODE_DOWNLOAD_URL_MACOS
+   elif [[ $(osIsLinux) == "Y" ]]; then
       echo "Can't support!!!"
    fi
 }
 
-usage="$(basename -- "$0") [-hi] -- Visual Studio Code Application
+usage="$(basename -- "$0") [-his] [ZIP_FILE_PATH] -- Visual Studio Code Application
 
    Option:
-      -h  show this help text
-      -i  Install Visual Studio Code
+      -h          show this help text
+      -i          Install Visual Studio Code
+      -s PATH     Install Visual Studio Code by file
 "
-while getopts 'hi:' option; do
+while getopts 'his:' option; do
   case "$option" in
    h) echo "$usage"
       exit
       ;;
    i) echo "Install Visual Studio Code..."
+      install
+      exit
+      ;;
+   s) echo "Install Visual Studio Code..."
       install $OPTARG
       exit
       ;;
@@ -54,13 +55,10 @@ if [ ! -d $VSCODE_HOME ]; then
             vscode -i"
    exit 1
 fi
-if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
-  # Windows
+if [[ $OS_WINDOWS == "Y" ]]; then
   code $*
-elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
-  # MacOS
+elif [[ $OS_MACOS == "Y" ]]; then
   open -a "$DEV_HOME/opt/vscode/Visual Studio Code.app"
-elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
-  # Unix
+elif [[ $OS_LINUX == "Y" ]]; then
   echo "Can't support!!!"
 fi

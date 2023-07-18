@@ -56,11 +56,11 @@ if [ ! -f ~/.ssh/id_rsa.pub ]; then
     ssh-keygen -q -t rsa -N "" -f ~/.ssh/id_rsa
 fi
 #### ==========================================================================
-if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]];then
+if [[ $(osIsWindows) == "Y" ]];then
     # Setup Git Bash Support Cmd Charset
     cmd //C "chcp 65001"
     # Add gsudo to PATH
-    export PATH=$PATH:$DEV_HOME/opt/gsudo.portable/x64
+    export PATH=$PATH:$DEV_HOME/opt/gsudo.portable/x64:$DEV_HOME/opt/7z-extra
 fi
 #### ==========================================================================
 source bashprompt

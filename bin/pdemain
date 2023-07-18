@@ -1,0 +1,54 @@
+#!/bin/bash
+usage="Portable Development Environment(PDE)
+
+Usage:
+  $(basename -- "$0") 
+    
+Command:
+  install  Install PDE(Setup .bashrc)
+
+Options:
+  -h, --help    Help for PDE
+"
+####
+install() {
+    echo ""
+}
+getEnvOS() {
+    echo $(echo $MACHTYPE|awk -F- '{print $3}')
+}
+osIsWindows() {
+    [[ $(getEnvOS) =~ ^msys.*$ ]] && echo "Y" || echo "N"
+}
+osIsMac() {
+    [[ $(getEnvOS) =~ ^darwin.*$ ]] && echo "Y" || echo "N"
+}
+####
+#### Main Script
+####
+if [[ $(osIsWindows) == "Y" ]]; then
+    DIR="$(cd "$(dirname $(readlink -f "${BASH_SOURCE[0]}"))/.." && pwd)"
+elif [[ $(osIsMac) == "Y" ]]; then
+    DIR="$(cd "$(dirname "${BASH_ARGV[0]}")"/..; pwd)"
+else
+    echo "Sorry! PDE can't support on this system!!!"
+    return
+fi
+echo $DIR
+if [[ ! -f $DIR/bin/setenv ]]; then
+    echo "Can't found PDE HOME!!!"
+    return
+fi
+export DEV_HOME=$DIR
+if [[ $DEV_HOME == '' ]]; then
+    echo "Can't setup Portable Development Environment!!!"
+    return
+fi
+#### ==========================================================================
+
+if [[ $1 == '' ]]; then
+    . $DEV_HOME/bin/setenv $*
+    cd $DEV_HOME
+elif [[ $1 == "install" ]]; then
+    install
+fi

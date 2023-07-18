@@ -1,15 +1,11 @@
 #!/bin/bash
 function install () {
-   # Download URL: https://www.jetbrains.com/idea/download/
-   if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
-      # Windows
-      installapp -r $INTELLIJ_HOME intellij https://download.jetbrains.com/idea/ideaIC-2020.3.2.win.zip
-   elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
-      # MacOS
-      installapp -s "IntelliJ IDEA CE.app" -t dmg $INTELLIJ_HOME intellij https://download.jetbrains.com/idea/ideaIC-2020.3.2.dmg
-   elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
-      # Unix
-      INTELLIJ_DOWNLOAD_URL=
+   . $DEV_HOME/etc/intellij.conf
+   if [[ $OS_WINDOWS == "Y" ]]; then
+      installapp -r $INTELLIJ_HOME intellij $INTELLIJ_DOWNLOAD_URL_WINDOWS
+   elif [[ $OS_MACOS == "Y" ]]; then
+      installapp -s "IntelliJ IDEA CE.app" -t dmg $INTELLIJ_HOME intellij $INTELLIJ_DOWNLOAD_URL_MACOS
+   elif [[ $OS_LINUX == "Y" ]]; then
       echo "Can't support!!!"
    fi
 }
@@ -50,13 +46,10 @@ if [ ! -d $INTELLIJ_HOME ]; then
             intellij -i"
    exit 1
 fi
-if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
-   # Windows
+if [[ $OS_WINDOWS == "Y" ]]; then
    start idea64.exe
-elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
-   # MacOS
+elif [[ $OS_MACOS == "Y" ]]; then
    open -a "IntelliJ IDEA CE.app"
-elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
-   # Unix
-   echo "Can't Support!!!"
+elif [[ $OS_LINUX == "Y" ]]; then
+  echo "Can't support!!!"
 fi

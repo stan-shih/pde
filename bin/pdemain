@@ -5,11 +5,14 @@ Usage:
   $(basename -- "$0") 
     
 Command:
-  setup  Setup ~/.bashrc for adding the function of starting PDE
+  setup     Setup ~/.bashrc for adding the function of starting PDE
+  run       Run the project
+  install   Install Application
 
 Options:
   -h, --help    Help for PDE
 "
+####
 ####
 setup() {
     if [[ -f ~/.bashrc ]]; then
@@ -23,6 +26,13 @@ setup() {
     fi
     cat ~/.bashrc
 }
+delete() {
+    echo "Delete base directory in the home ($1)..."
+    . $DEV_HOME/bin/setenv default
+    cd $DEV_HOME
+    rm -rf $DEV_HOME/home/$1
+}
+####
 getEnvOS() {
     echo $(echo $MACHTYPE|awk -F- '{print $3}')
 }
@@ -61,9 +71,7 @@ if [[ $DEV_HOME == '' ]]; then
     echo "Can't setup Portable Development Environment!!!"
     return
 fi
-if declare -F pde > /dev/null; then
-    echo ""
-else
+if ! declare -F pde > /dev/null; then
     pde() {
         source $DEV_HOME/bin/pdemain $*
     }
@@ -75,7 +83,14 @@ if [[ $1 == '' ]]; then
     cd $DEV_HOME
 elif [[ $1 == "setup" ]]; then
     setup $DIR
-elif [[ $1 == "start" ]]; then
+elif [[ $1 == "run" ]]; then
     shift
     . $DEV_HOME/bin/setenv $*
+elif [[ $1 == "delete" ]]; then
+    shift
+    delete $1
+elif [[ $1 == "-h" ]]; then
+    echo "$usage"
+else
+    echo "$usage"
 fi

@@ -11,8 +11,8 @@ export ANT_HOME=$DEV_HOME/opt/ant
 export MAVEN_HOME=$DEV_HOME/opt/maven
 export M2_HOME=$DEV_HOME/opt/maven
 #
-# BareTail
-export BAREMETAL_HOME=$DEV_HOME/opt/baremetal
+# Baremetal
+source $DEV_HOME/etc/default.baremetal.setting
 #
 # DBeaver
 export DBEAVER_HOME=$DEV_HOME/opt/dbeaver

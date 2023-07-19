@@ -1,9 +1,9 @@
 #!/bin/bash
 function install () {
-   # Download URL: http://www.baremetalsoft.com/index.php
+   . $DEV_HOME/etc/url.baremetal.conf
    rm -rf $BAREMETAL_HOME
    mkdir -p $BAREMETAL_HOME
-   curl -L -o $BAREMETAL_HOME/baretail.exe http://www.baremetalsoft.com/baretail/download.php?p=m
+   curl -L -o $BAREMETAL_HOME/baretail.exe $BAREMETAL_DOWNLOAD_URL_WINDOWS
 }
 
 usage="$(basename -- "$0") [-hi] -- BareTail Application
@@ -42,17 +42,14 @@ if [ ! -d $BAREMETAL_HOME ]; then
             baretail -i"
    exit 1
 fi
-if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then
-   # Windows
+if [[ $OS_WINDOWS == "Y" ]]; then
    if [ -f $BAREMETAL_HOME/baretailpro.exe ]; then
       start $BAREMETAL_HOME/baretailpro.exe
    else
       start $BAREMETAL_HOME/baretail.exe
    fi
-elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
-   # MacOS
+elif [[ $OS_MACOS == "Y" ]]; then
    echo "Can't Support!!!"
-elif [[ "$DEV_ENV_OS" =~ ^linux.*$ ]]; then
-   # Unix
-   echo "Can't Support!!!"
+elif [[ $OS_LINUX == "Y" ]]; then
+  echo "Can't support!!!"
 fi

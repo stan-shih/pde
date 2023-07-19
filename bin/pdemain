@@ -28,9 +28,9 @@ setup() {
 }
 delete() {
     echo "Delete base directory in the home ($1)..."
+    rm -rf $DEV_HOME/home/$1
     . $DEV_HOME/bin/setenv default
     cd $DEV_HOME
-    rm -rf $DEV_HOME/home/$1
 }
 ####
 getEnvOS() {

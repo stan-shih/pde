@@ -24,9 +24,11 @@ if [[ "$1" != '' ]]; then
 fi
 export BASE=$DEV_HOME/home/$DEV_BASE
 if [ ! -d $BASE ]; then
-    mkdir -p $BASE
     echo "Create base directory in the home ($BASE)."
-    echo "Please setup java and eclipse"
+    cp -r $DEV_DEFAULT_BASE $BASE
+    if [[ ! "$PATH" =~ $BASE/bin ]]; then
+        export PATH=$BASE/bin:$PATH
+    fi
 fi
 [ -f $BASE/bash.bashrc ] && source $BASE/bash.bashrc
 #### ==========================================================================
@@ -44,7 +46,8 @@ if [[ ! "$PATH" =~ $DEV_HOME/bin ]]; then
     export PATH=$DEV_HOME/bin:$DEV_HOME:$PATH
 elif [[ ! "$PATH" =~ ^$DEV_HOME/bin ]]; then
     # PATH reset the bin path
-    export PATH=$DEV_HOME/bin:$DEV_HOME:${PATH/}$DEV_HOME\/bin/}
+    export PATH=$DEV_HOME:${PATH/$DEV_HOME:}
+    export PATH=$DEV_HOME/bin:${PATH/$DEV_HOME\/bin:}
 fi
 #### ==========================================================================
 source $DEV_HOME/etc/application.setting

@@ -55,7 +55,7 @@ if [[ $(osIsWindows) == "Y" ]]; then
     DIR="$(cd "$(dirname $(readlink -f "${BASH_SOURCE[0]}"))/.." && pwd)"
     export OS_WINDOWS="Y"
 elif [[ $(osIsMac) == "Y" ]]; then
-    DIR="$(cd "$(dirname "${BASH_ARGV[0]}")"/..; pwd)"
+    DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")"/..; pwd)"
     export OS_MACOS="Y"
 else
     echo "Sorry! PDE can't support on this system!!!"

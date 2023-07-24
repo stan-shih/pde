@@ -58,7 +58,7 @@ fi
 if [[ $OS_WINDOWS == "Y" ]]; then
   code $*
 elif [[ $OS_MACOS == "Y" ]]; then
-  open -a "$DEV_HOME/opt/vscode/Visual Studio Code.app"
+  open -a "$DEV_HOME/opt/vscode/Visual Studio Code.app" --args $*
 elif [[ $OS_LINUX == "Y" ]]; then
   echo "Can't support!!!"
 fi

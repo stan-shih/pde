@@ -5,7 +5,7 @@
 /etc/global.bashrc
 !/etc/
 /PortableGit
-/home/**/
+/home/*
 !/home/default
 /opt/**/
 !/opt/7z-extra

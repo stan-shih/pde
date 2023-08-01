@@ -1,7 +1,8 @@
 #!/bin/bash
 function install () {
-   # Download URL: https://maven.apache.org/download.cgi
-   installapp -t zip -s apache-maven-3.8.1 $MAVEN_HOME maven https://downloads.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.zip
+   . $DEV_HOME/etc/url.maven.conf
+
+   installapp -t zip -s apache-maven-3.9.3 $MAVEN_HOME maven $MAVEN_DOWNLOAD_URL_COMMON
    ###
    ### Setup Local Repository
    ###

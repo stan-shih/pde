@@ -1,4 +1,16 @@
 #!/bin/bash
+createProject() {
+    read -p "Create project directory in the home ($BASE)? (Y/n): " choice
+
+    if [[ "$choice" == "n" || "$choice" == "N" ]]; then
+        # Rollback to default project
+        export DEV_BASE=default
+        export BASE=$DEV_HOME/home/$DEV_BASE
+        return
+    fi
+    cp -r $DEV_DEFAULT_BASE $BASE
+}
+
 echo "Setup Environment...($MACHTYPE)"
 #### ==========================================================================
 export DEV_ENV_ARCH=$(echo $MACHTYPE|awk -F- '{print $1}')
@@ -24,11 +36,10 @@ if [[ "$1" != '' ]]; then
 fi
 export BASE=$DEV_HOME/home/$DEV_BASE
 if [ ! -d $BASE ]; then
-    echo "Create base directory in the home ($BASE)."
-    cp -r $DEV_DEFAULT_BASE $BASE
-    if [[ ! "$PATH" =~ $BASE/bin ]]; then
-        export PATH=$BASE/bin:$PATH
-    fi
+    createProject
+fi
+if [[ ! "$PATH" =~ $BASE/bin ]]; then
+    export PATH=$BASE/bin:$PATH
 fi
 [ -f $BASE/bash.bashrc ] && source $BASE/bash.bashrc
 #### ==========================================================================

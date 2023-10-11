@@ -33,11 +33,11 @@ shift $((OPTIND - 1))
 ### Main Bash Script
 ###
 if [ "$ECLIPSE_HOME" == '' ] || [ ! -d $ECLIPSE_HOME ]; then
-    echo "Please setup default Eclipse version first.(Need to Re-run)
+    echo "Please setup default Eclipse!!!
    
    Execute: 
-            eclipse -s <eclipse name in eclipses>"
-    ls -al $DEV_HOME/eclipses
+            pde config eclipse <eclipse name in eclipses>"
+    ls -al $DEV_HOME/opt/eclipses
     exit 1
 fi
 if [ -z $WORKSPACE_DIR ]; then

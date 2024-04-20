@@ -1,0 +1,32 @@
+#!/bin/bash
+
+usage="pde install [-f] <application> -- install application.
+
+   Option:
+         -h  show this help text
+         -f  Install offline
+
+   Example:
+         $ pde install baretail
+         $ pde install dbeaver
+         $ pde install intellij
+"
+
+installPath=$DEV_HOME/usr/install
+export PATH=$DEV_HOME/usr/sbin:$installPath:$PATH
+OFFLINE=$2
+
+case $1 in
+  dbeaver)
+    $installPath/dbeaver $OFFLINE
+    exit 0
+    ;;
+  intellij)
+    $installPath/intellij $OFFLINE
+    exit 0
+    ;;
+  *)
+    echo "$usage"
+    exit 1
+    ;;
+esac

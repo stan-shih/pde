@@ -1,0 +1,33 @@
+#!/bin/bash
+
+while [ $# -gt 0 ]; do
+    if [[ $1 == "--dir" ]]; then
+        shift
+        installDir=$1
+    elif [[ $1 == "--src" ]]; then
+        shift
+        srcDir=$1
+    fi
+    shift
+done
+
+if [[ $installDir == "" ]]; then
+    echo "Usage: installapp --dir <install-dir> --folder <application-folder-name> [--inside-folder <inside-folder-name>]"
+    exit 1
+fi
+echo "Install to: $installDir"
+if [[ -d $installDir ]]; then
+    mv $installDir $installDir.bak
+fi
+
+mv $srcDir $installDir
+if [[ $? != 0 ]]; then
+    echo "Install failed!!!"
+    if [[ -d $installDir.bak ]]; then
+        echo "Rollback..."
+        mv $installDir.bak $installDir
+    fi
+    exit 1
+else
+    rm -rf $installDir.bak
+fi

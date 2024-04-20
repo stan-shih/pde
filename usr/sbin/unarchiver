@@ -1,0 +1,50 @@
+#!/bin/bash
+##
+## Unarchive the downloaded application archive
+##
+usage() {
+    echo "Usage: unarchiver --src <archive-path> --folder <application-folder-name> [--inside-folder <inside-folder-name>]"
+}
+
+while [ $# -gt 0 ]; do
+    if [[ $1 == "--src" ]]; then
+        shift
+        srcArchiverPath=$1
+    elif [[ $1 == "--folder" ]]; then
+        shift
+        appFolderName=$1
+    elif [[ $1 == "--inside-folder" ]]; then
+        shift
+        insideFolder=$1
+    fi
+    shift
+done
+
+if [[ $srcArchiverPath == "" ]]; then
+    usage
+    exit 1
+fi
+
+if [[ $appFolderName == "" ]]; then
+    usage
+    exit 1
+fi
+
+outputPath="$DEV_HOME/tmp/$appFolderName"
+if [[ -d $outputPath ]]; then
+    rm -rf $outputPath
+fi
+
+7za x -r -o$outputPath $srcArchiverPath
+
+if [[ $insideFolder != "" ]]; then
+    mv $outputPath/$insideFolder/* $outputPath
+    if [[ $? != 0 ]]; then
+        echo "Unarchive failed!!!"
+        exit 1
+    fi
+    rm -rf $outputPath/$insideFolder
+fi
+
+## Return the path of the unarchived application
+echo "$outputPath"

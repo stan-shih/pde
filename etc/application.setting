@@ -28,12 +28,8 @@ fi
 exportpath $ANT_HOME /bin
 #### Apache Maven
 exportpath $MAVEN_HOME /bin
-#### DBeaver
-exportpath $DBEAVER_HOME
 #### FileZilla
 exportpath $FILEZILLA_HOME
-#### IntelliJ
-exportpath $INTELLIJ_HOME /bin
 #### NodeJS
 if [[ ! "$PATH" =~ $NODEJS_HOME ]]; then
     if [[ "$DEV_ENV_OS" =~ ^msys.*$ ]]; then

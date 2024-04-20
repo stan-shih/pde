@@ -1,0 +1,46 @@
+#!/bin/bash
+
+. $DEV_HOME/etc/intellij.conf
+####
+####
+installonWindows() {
+    downloadPath=$(downloadapp --type zip --url $INTELLIJ_DOWNLOAD_URL_WINDOWS --name $INTELLIJ_FOLDER_NAME)
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    echo "Download path: $downloadPath"
+    unarchiver --src $downloadPath --folder $INTELLIJ_FOLDER_NAME
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    export INTELLIJ_HOME=$DEV_HOME/opt/$INTELLIJ_FOLDER_NAME
+    unarchivePath=$DEV_HOME/tmp/$INTELLIJ_FOLDER_NAME
+    installapp --dir $INTELLIJ_HOME --src $unarchivePath
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    setupapp --name intellij --command "start $INTELLIJ_HOME/bin/idea64.exe"
+}
+installOnMacOS() {
+    installapp -s "IntelliJ IDEA CE.app" -t dmg $INTELLIJ_HOME intellij $INTELLIJ_DOWNLOAD_URL_MACOS
+}
+installOnLinux() {
+    echo "Can't support!!!"
+}
+####
+####
+installFail() {
+    echo "Install failed!!!"
+    exit 1
+}
+
+if [[ $OS_WINDOWS == "Y" ]]; then
+    installonWindows
+elif [[ $OS_MACOS == "Y" ]]; then
+    installOnMacOS
+elif [[ $OS_LINUX == "Y" ]]; then
+    installOnLinux
+fi

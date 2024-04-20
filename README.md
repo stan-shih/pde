@@ -1,6 +1,8 @@
-# Introduction to Developer Environment
+# Introduction to Portable Development Environment
 
-建立工作環境，支援Windows、MacOS及Unix作業系統
+Portable Development Environment(簡稱pde)提供可攜式的軟體開發環境，支援Windows、MacOS作業系統
+
+> Unix作業系統暫不支援
 
 透過Bash Script可以安裝及開啟應用程式，可以依據不同專案設定環境變數，而Windows系統則會安裝Git Bash for Windows並執行GitBash
 

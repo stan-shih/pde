@@ -38,7 +38,7 @@ if NOT "%GIT_VERSION%" == "%SUPPORT_VERSION%" (
 cd /d %DEV_HOME%
 echo %GIT_HOME%
 set "PATH=%GIT_HOME%;%PATH%"
-start git-bash.exe -c "source developer %1;bash %2 %3 %4 %5 %6 %7 %8 %9"
+start git-bash.exe -c "source pde.sh %1;bash %2 %3 %4 %5 %6 %7 %8 %9"
 exit 0
 
 :UPGRADE

@@ -7,7 +7,9 @@ Usage:
 Command:
   setup     Setup ~/.bashrc for adding the function of starting PDE
   run       Run the project
+  delete    Delete Project
   install   Install Application
+  install --offline  Install Application offline
 
 Options:
   -h, --help    Help for PDE
@@ -31,6 +33,18 @@ delete() {
     rm -rf $DEV_HOME/home/$1
     . $DEV_HOME/bin/setenv default
     cd $DEV_HOME
+}
+run() {
+    . $DEV_HOME/bin/setenv $*
+}
+install() {
+    echo "Install Application..."
+    if [[ $1 == "--offline" ]]; then
+        shift
+        executeinstall $1 -f
+        return
+    fi
+    executeinstall $1
 }
 ####
 getEnvOS() {
@@ -79,18 +93,25 @@ fi
 #### ==========================================================================
 
 if [[ $1 == '' ]]; then
-    . $DEV_HOME/bin/setenv $*
+    run
     cd $DEV_HOME
-elif [[ $1 == "setup" ]]; then
-    setup $DIR
 elif [[ $1 == "run" ]]; then
     shift
-    . $DEV_HOME/bin/setenv $*
+    run $*
+elif [[ $1 == "setup" ]]; then
+    setup $DIR
 elif [[ $1 == "delete" ]]; then
     shift
     delete $1
+elif [[ $DEV_BASE == "" ]]; then
+    echo "Please execute 'pde' first!!!"
+    exit 1
+elif [[ $1 == "install" ]]; then
+    shift
+    install $*
 elif [[ $1 == "-h" ]]; then
     echo "$usage"
 else
     echo "$usage"
+    exit 1
 fi

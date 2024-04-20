@@ -1,0 +1,38 @@
+#!/bin/bash
+##
+## Download application archive via curl command
+##
+archiveType="zip"
+
+while [ $# -gt 0 ]; do
+    if [[ $1 == "--type" ]]; then
+        shift
+        archiveType=$1
+    elif [[ $1 == "--url" ]]; then
+        shift
+        downloadUrl=$1
+    elif [[ $1 == "--name" ]]; then
+        shift
+        appName=$1
+    fi
+    shift
+done
+
+if [[ $downloadUrl == "" ]]; then
+    echo "Usage: downloadapp --type <archive-type> --url <download-url> --name <application-name>"
+    exit 1
+fi
+
+downloadArchivePath="$DEV_HOME/tmp"
+
+if [[ $archiveType == "zip" ]]; then
+    if [[ -f $downloadArchivePath/$appName.zip ]]; then
+        rm -rf $downloadArchivePath/$appName.zip
+    fi
+    curl -L -o $downloadArchivePath/$appName.zip $downloadUrl
+elif [[ $archiveType == "exe" ]]; then
+    curl -L -o $downloadArchivePath/$appName.exe $downloadUrl
+fi
+
+## Return the path of the downloaded archive
+echo "$downloadArchivePath/$appName.$archiveType"

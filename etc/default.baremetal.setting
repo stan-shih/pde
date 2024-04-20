@@ -1,4 +1,0 @@
-#!/bin/bash
-
-export BAREMETAL_HOME=$DEV_HOME/opt/baremetal
-[ -f $DEV_HOME/usr/baremetal.setting ] && source $DEV_HOME/usr/baremetal.setting

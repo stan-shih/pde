@@ -11,17 +11,8 @@ export ANT_HOME=$DEV_HOME/opt/ant
 export MAVEN_HOME=$DEV_HOME/opt/maven
 export M2_HOME=$DEV_HOME/opt/maven
 #
-# Baremetal
-source $DEV_HOME/etc/default.baremetal.setting
-#
-# DBeaver
-export DBEAVER_HOME=$DEV_HOME/opt/dbeaver
-#
 # FileZilla
 export FILEZILLA_HOME=$DEV_HOME/opt/filezilla
-#
-# IntelliJ
-export INTELLIJ_HOME=$DEV_HOME/opt/intellij
 #
 # NodeJS
 export NODEJS_HOME=$DEV_HOME/opt/nodejs

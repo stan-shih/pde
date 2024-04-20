@@ -13,6 +13,10 @@ Command:
 
 Options:
   -h, --help    Help for PDE
+
+Example:
+  $(basename -- "$0") install <application>
+  $(basename -- "$0") install --offline <application> <file-or-path>
 "
 ####
 ####
@@ -41,7 +45,7 @@ install() {
     echo "Install Application..."
     if [[ $1 == "--offline" ]]; then
         shift
-        executeinstall $1 -f
+        executeinstall $1 -f $2
         return
     fi
     executeinstall $1

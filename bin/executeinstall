@@ -1,6 +1,6 @@
 #!/bin/bash
 
-usage="pde install [-f] <application> -- install application.
+usage="pde install <application> [-f <file-or-path>]  -- install application.
 
    Option:
          -h  show this help text
@@ -14,7 +14,14 @@ usage="pde install [-f] <application> -- install application.
 
 installPath=$DEV_HOME/usr/install
 export PATH=$DEV_HOME/usr/sbin:$installPath:$PATH
-OFFLINE=$2
+if [ "$2" == "-f" ]; then
+  if [ -z "$3" ]; then
+    echo "$usage"
+    exit 1
+  fi
+  echo "Activate offline installation mode!!!"
+  OFFLINE=$3
+fi
 
 case $1 in
   dbeaver)
@@ -23,6 +30,10 @@ case $1 in
     ;;
   intellij)
     $installPath/intellij $OFFLINE
+    exit 0
+    ;;
+  baretail)
+    $installPath/baretail $OFFLINE
     exit 0
     ;;
   *)

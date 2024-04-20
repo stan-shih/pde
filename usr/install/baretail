@@ -1,0 +1,54 @@
+#!/bin/bash
+
+. $DEV_HOME/etc/baremetal.conf
+####
+####
+installonWindows() {
+    if [ -z $1 ]; then
+        downloadPath=$(downloadapp --type exe --url $BAREMETAL_DOWNLOAD_URL_WINDOWS --name $BAREMETAL_FOLDER_NAME)
+        if [[ $? != 0 ]]; then
+            installFail
+            return 1
+        fi
+        echo "Download path: $downloadPath"
+        unarchivePath=$DEV_HOME/tmp/$BAREMETAL_FOLDER_NAME
+        mkdir -p $unarchivePath
+        mv $downloadPath $unarchivePath
+        export BAREMETAL_HOME=$DEV_HOME/opt/$BAREMETAL_FOLDER_NAME
+        installapp --dir $BAREMETAL_HOME --src $unarchivePath
+        if [[ $? != 0 ]]; then
+            installFail
+            return 1
+        fi
+        fileName="baretail.exe"
+    else
+        ### Offline install
+        cur=$(pwd)
+        # Change directory to the file directory
+        cd $(dirname $1)
+        export BAREMETAL_HOME=$(pwd)
+        cd $cur
+        fileName=$(basename $1)
+    fi
+    setupapp --name baretail --command "start $BAREMETAL_HOME/$fileName"
+}
+installOnMacOS() {
+    echo "Can't Support!!!"
+}
+installOnLinux() {
+    echo "Can't support!!!"
+}
+####
+####
+installFail() {
+    echo "Install failed!!!"
+    exit 1
+}
+
+if [[ $OS_WINDOWS == "Y" ]]; then
+    installonWindows $*
+elif [[ $OS_MACOS == "Y" ]]; then
+    installOnMacOS $*
+elif [[ $OS_LINUX == "Y" ]]; then
+    installOnLinux $*
+fi

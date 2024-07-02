@@ -1,0 +1,17 @@
+#!/bin/bash
+
+while [ $# -gt 0 ]; do
+    if [[ $1 == "--name" ]]; then
+        shift
+        appBinary=$1
+    elif [[ $1 == "--command" ]]; then
+        shift
+        appCommand=$1
+    fi
+    shift
+done
+
+appBinaryPath=$DEV_HOME/etc/application.path/$appBinary.path
+
+echo "#!/bin/bash" > $appBinaryPath
+echo "$appCommand" >> $appBinaryPath

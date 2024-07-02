@@ -3,6 +3,9 @@
 #### alias
 alias gitl='git log --pretty="%h %H %ai %<(16,trunc)%an %ci %<(16,trunc)%cn %s"'
 ####
+#### Application Path
+[ -f $DEV_HOME/etc/application.path/maven.path ] && source $DEV_HOME/etc/application.path/maven.path
+####
 #### Tools Home Path
 # Apache Ant
 export ANT_HOME=$DEV_HOME/opt/ant

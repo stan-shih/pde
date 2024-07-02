@@ -15,4 +15,6 @@
 /repos/**/
 !/repos/.gitkeep
 /tmp
+/usr/bin/**
+!/usr/bin/.gitkeep
 /usr/local/bin/**

@@ -1,0 +1,46 @@
+#!/bin/bash
+
+. $DEV_HOME/etc/maven.conf
+####
+####
+installonWindows() {
+    downloadPath=$(downloadapp --type zip --url $MAVEN_DOWNLOAD_URL_COMMON --name $MAVEN_FOLDER_NAME)
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    echo "Download path: $downloadPath"
+    unarchiver --src $downloadPath --folder $MAVEN_FOLDER_NAME --inside-folder $MAVEN_FOLDER_NAME
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    export MAVEN_HOME=$DEV_HOME/opt/$MAVEN_FOLDER_NAME
+    unarchivePath=$DEV_HOME/tmp/$MAVEN_FOLDER_NAME
+    installapp --dir $MAVEN_HOME --src $unarchivePath
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    setupapppath --name maven --command "export MAVEN_HOME=$MAVEN_HOME; export PATH=\$PATH:\$MAVEN_HOME/bin"
+}
+installOnMacOS() {
+    echo "Can't support!!!"
+}
+installOnLinux() {
+    echo "Can't support!!!"
+}
+####
+####
+installFail() {
+    echo "Install failed!!!"
+    exit 1
+}
+
+if [[ $OS_WINDOWS == "Y" ]]; then
+    installonWindows
+elif [[ $OS_MACOS == "Y" ]]; then
+    installOnMacOS
+elif [[ $OS_LINUX == "Y" ]]; then
+    installOnLinux
+fi

@@ -10,10 +10,6 @@ alias gitl='git log --pretty="%h %H %ai %<(16,trunc)%an %ci %<(16,trunc)%cn %s"'
 # Apache Ant
 export ANT_HOME=$DEV_HOME/opt/ant
 #
-# Apache Maven
-export MAVEN_HOME=$DEV_HOME/opt/maven
-export M2_HOME=$DEV_HOME/opt/maven
-#
 # FileZilla
 export FILEZILLA_HOME=$DEV_HOME/opt/filezilla
 #

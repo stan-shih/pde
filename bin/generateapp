@@ -1,0 +1,56 @@
+#!/bin/bash
+
+installDir=$DEV_HOME/usr/install
+
+while getopts "hf" opt; do
+    case $opt in
+        h)
+            echo "Usage: $0 <app-name>"
+            exit 0
+            ;;
+        f)
+            force=true
+            shift 1
+            ;;
+    esac
+done
+
+if [[ "$1" == "" ]]; then
+    echo "Usage: $0 <app-name>"
+    exit 1
+elif [[ $force == true ]]; then
+    echo "Force create install script for $1"
+elif [[ -f $installDir/$1 ]]; then
+    echo "App $1 already exists"
+    echo "Use -f to force install"
+    exit 1
+fi
+appName=$1
+
+encoded_data=$(cat <<EOF
+IyEvYmluL2Jhc2gNCg0KLiAkREVWX0hPTUUvZXRjL3NhbXBsZS5jb25mDQojIyMjDQojIyMjDQpp
+bnN0YWxsb25XaW5kb3dzKCkgew0KICAgIGRvd25sb2FkUGF0aD0kKGRvd25sb2FkYXBwIC0tdHlw
+ZSB6aXAgLS11cmwgJFNBTVBMRV9ET1dOTE9BRF9VUkxfV0lORE9XUyAtLW5hbWUgJFNBTVBMRV9G
+T0xERVJfTkFNRSkNCiAgICBpZiBbWyAkPyAhPSAwIF1dOyB0aGVuDQogICAgICAgIGluc3RhbGxG
+YWlsDQogICAgICAgIHJldHVybiAxDQogICAgZmkNCiAgICBlY2hvICJEb3dubG9hZCBwYXRoOiAk
+ZG93bmxvYWRQYXRoIg0KICAgIHVuYXJjaGl2ZXIgLS1zcmMgJGRvd25sb2FkUGF0aCAtLWZvbGRl
+ciAkU0FNUExFX0ZPTERFUl9OQU1FDQogICAgaWYgW1sgJD8gIT0gMCBdXTsgdGhlbg0KICAgICAg
+ICBpbnN0YWxsRmFpbA0KICAgICAgICByZXR1cm4gMQ0KICAgIGZpDQogICAgZXhwb3J0IFNBTVBM
+RV9IT01FPSRERVZfSE9NRS9vcHQvJFNBTVBMRV9GT0xERVJfTkFNRQ0KICAgIHVuYXJjaGl2ZVBh
+dGg9JERFVl9IT01FL3RtcC8kU0FNUExFX0ZPTERFUl9OQU1FDQogICAgaW5zdGFsbGFwcCAtLWRp
+ciAkU0FNUExFX0hPTUUgLS1zcmMgJHVuYXJjaGl2ZVBhdGgNCiAgICBpZiBbWyAkPyAhPSAwIF1d
+OyB0aGVuDQogICAgICAgIGluc3RhbGxGYWlsDQogICAgICAgIHJldHVybiAxDQogICAgZmkNCiAg
+ICBzZXR1cGFwcCAtLW5hbWUgc2FtcGxlIC0tY29tbWFuZCAic3RhcnQgJFNBTVBMRV9IT01FL2Jp
+bi9pZGVhNjQuZXhlIg0KfQ0KaW5zdGFsbE9uTWFjT1MoKSB7DQogICAgZWNobyAiQ2FuJ3Qgc3Vw
+cG9ydCEhISINCn0NCmluc3RhbGxPbkxpbnV4KCkgew0KICAgIGVjaG8gIkNhbid0IHN1cHBvcnQh
+ISEiDQp9DQojIyMjDQojIyMjDQppbnN0YWxsRmFpbCgpIHsNCiAgICBlY2hvICJJbnN0YWxsIGZh
+aWxlZCEhISINCiAgICBleGl0IDENCn0NCg0KaWYgW1sgJE9TX1dJTkRPV1MgPT0gIlkiIF1dOyB0
+aGVuDQogICAgaW5zdGFsbG9uV2luZG93cw0KZWxpZiBbWyAkT1NfTUFDT1MgPT0gIlkiIF1dOyB0
+aGVuDQogICAgaW5zdGFsbE9uTWFjT1MNCmVsaWYgW1sgJE9TX0xJTlVYID09ICJZIiBdXTsgdGhl
+bg0KICAgIGluc3RhbGxPbkxpbnV4DQpmaQ0K
+EOF
+)
+
+echo "$encoded_data" | base64 --decode > $installDir/$appName
+
+echo "Install script for $appName created in $installDir/$appName"

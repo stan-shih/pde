@@ -1,0 +1,43 @@
+#!/bin/bash
+
+. $DEV_HOME/etc/ant.conf
+####
+####
+install() {
+    downloadPath=$(downloadapp --type zip --url $ANT_DOWNLOAD_URL --name $ANT_FOLDER_NAME)
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    echo "Download path: $downloadPath"
+    unarchiver --src $downloadPath --folder $ANT_FOLDER_NAME --inside-folder $ANT_FOLDER_NAME
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    export ANT_HOME=$DEV_HOME/opt/$ANT_FOLDER_NAME
+    unarchivePath=$DEV_HOME/tmp/$ANT_FOLDER_NAME
+    installapp --dir $ANT_HOME --src $unarchivePath
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    setupapppath --name ant --command "export PATH=\$PATH:\$ANT_HOME/bin"
+}
+installOnLinux() {
+    echo "Can't support!!!"
+}
+####
+####
+installFail() {
+    echo "Install failed!!!"
+    exit 1
+}
+
+if [[ $OS_WINDOWS == "Y" ]]; then
+    install
+elif [[ $OS_MACOS == "Y" ]]; then
+    install
+elif [[ $OS_LINUX == "Y" ]]; then
+    installOnLinux
+fi

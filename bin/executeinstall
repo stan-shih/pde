@@ -7,6 +7,7 @@ usage="pde install <application> [-f <file-or-path>]  -- install application.
          -f  Install offline
 
    Example:
+         $ pde install ant
          $ pde install baretail
          $ pde install dbeaver
          $ pde install intellij
@@ -25,6 +26,10 @@ if [ "$2" == "-f" ]; then
 fi
 
 case $1 in
+  ant)
+    $installPath/ant $OFFLINE
+    exit 0
+    ;;
   baretail)
     $installPath/baretail $OFFLINE
     exit 0

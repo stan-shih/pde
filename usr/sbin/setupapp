@@ -14,4 +14,4 @@ done
 appBinaryPath=$DEV_HOME/usr/bin/$appBinary
 
 echo "#!/bin/bash" > $appBinaryPath
-echo "$appCommand" >> $appBinaryPath
+echo -e "$appCommand" >> $appBinaryPath

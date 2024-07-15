@@ -44,7 +44,5 @@ if [[ ! "$PATH" =~ $NODEJS_HOME ]]; then
         fi
     fi
 fi
-#### Visual Studio Code
-exportpath $VSCODE_HOME /bin
 #### Sublime
 exportpath $SUBLIME_HOME

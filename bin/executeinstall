@@ -12,6 +12,7 @@ usage="pde install <application> [-f <file-or-path>]  -- install application.
          $ pde install dbeaver
          $ pde install intellij
          $ pde install maven
+         $ pde install vscode
 "
 
 installPath=$DEV_HOME/usr/install
@@ -44,6 +45,10 @@ case $1 in
     ;;
   maven)
     $installPath/maven $OFFLINE
+    exit 0
+    ;;
+  vscode)
+    $installPath/vscode $OFFLINE
     exit 0
     ;;
   *)

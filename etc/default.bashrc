@@ -15,8 +15,5 @@ export FILEZILLA_HOME=$DEV_HOME/opt/filezilla
 # NodeJS
 export NODEJS_HOME=$DEV_HOME/opt/nodejs
 #
-# Visual Studio Code
-export VSCODE_HOME=$DEV_HOME/opt/vscode
-#
 # Sublime
 export SUBLIME_HOME=$DEV_HOME/opt/sublime

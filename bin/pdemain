@@ -39,6 +39,10 @@ delete() {
     cd $DEV_HOME
 }
 run() {
+    if [[ $1 == "?" ]]; then
+        ls -al $DEV_HOME/home
+        return
+    fi
     . $DEV_HOME/bin/setenv $*
 }
 install() {

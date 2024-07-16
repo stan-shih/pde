@@ -4,8 +4,12 @@
 alias gitl='git log --pretty="%h %H %ai %<(16,trunc)%an %ci %<(16,trunc)%cn %s"'
 ####
 #### Application Path
-[ -f $DEV_HOME/etc/application.path/ant.path ] && source $DEV_HOME/etc/application.path/ant.path
-[ -f $DEV_HOME/etc/application.path/maven.path ] && source $DEV_HOME/etc/application.path/maven.path
+for file in "$DEV_HOME/etc/application.path"/*.path; do
+    if [ -f "$file" ]; then
+        echo "Sourcing $file"
+        source "$file"
+    fi
+done
 ####
 #### Tools Home Path
 #

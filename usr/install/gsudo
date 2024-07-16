@@ -1,0 +1,47 @@
+#!/bin/bash
+
+. $DEV_HOME/etc/gsudo.conf
+####
+####
+installonWindows() {
+    folderName=$GSUDO_FOLDER_NAME
+    downloadPath=$(downloadapp --type zip --url $GSUDO_DOWNLOAD_URL_WINDOWS --name $folderName)
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    echo "Download path: $downloadPath"
+    unarchiver --src $downloadPath --folder $folderName
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    export GSUDO_HOME=$DEV_HOME/opt/$folderName
+    unarchivePath=$DEV_HOME/tmp/$folderName
+    installapp --dir $GSUDO_HOME --src $unarchivePath
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    setupapppath --name gsudo --path "export PATH=\$PATH:\$GSUDO_HOME/x64"
+}
+installOnMacOS() {
+    echo "Can't support!!!"
+}
+installOnLinux() {
+    echo "Can't support!!!"
+}
+####
+####
+installFail() {
+    echo "Install failed!!!"
+    exit 1
+}
+
+if [[ $OS_WINDOWS == "Y" ]]; then
+    installonWindows
+elif [[ $OS_MACOS == "Y" ]]; then
+    installOnMacOS
+elif [[ $OS_LINUX == "Y" ]]; then
+    installOnLinux
+fi

@@ -23,12 +23,14 @@ installonWindows() {
         installFail
         return 1
     fi
-    command="path=
-if [[ \"\$1\" != \"\" ]]; then
+    command="params=
+if [[ \"\$1\" != \"\" ]] && [[ -d \"\$1\" ]]; then
     cd \$1
-    path=\".\"
+    params=\".\"
+elif [[ -f \"\$1\" ]]; then
+    params=\"\$1\"
 fi
-$VSCODE_HOME/bin/code \$path
+$VSCODE_HOME/bin/code \$params
 "
     setupapp --name vscode --command "$command"
 }

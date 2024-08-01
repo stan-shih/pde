@@ -22,7 +22,7 @@ install() {
         installFail
         return 1
     fi
-    setupapppath --name ant --command "export PATH=\$PATH:\$ANT_HOME/bin"
+    setupapppath --name ant --command "export ANT_HOME=$ANT_HOME; export PATH=\$PATH:\$ANT_HOME/bin"
 }
 installOnLinux() {
     echo "Can't support!!!"

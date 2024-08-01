@@ -24,10 +24,6 @@ elif [[ "$DEV_ENV_OS" =~ ^darwin.*$ ]]; then
         echo "brew install p7zip > Install p7zip OK"
     fi
 fi
-#### Apache Ant
-exportpath $ANT_HOME /bin
-#### Apache Maven
-exportpath $MAVEN_HOME /bin
 #### FileZilla
 exportpath $FILEZILLA_HOME
 #### NodeJS

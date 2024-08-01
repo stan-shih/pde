@@ -15,3 +15,5 @@ appBinaryPath=$DEV_HOME/etc/application.path/$appBinary.path
 
 echo "#!/bin/bash" > $appBinaryPath
 echo "$appCommand" >> $appBinaryPath
+
+echo "Please re-run pde command to apply the path setting!!!"

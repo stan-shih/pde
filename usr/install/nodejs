@@ -1,0 +1,57 @@
+#!/bin/bash
+
+. $DEV_HOME/etc/nodejs.conf
+####
+####
+installonWindows() {
+    folderName=$NODEJS_FOLDER_NAME
+    downloadPath=$(downloadapp --type zip --url $NODEJS_DOWNLOAD_URL_WINDOWS --name $folderName)
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    echo "Download path: $downloadPath"
+    unarchiver --src $downloadPath --folder $folderName --inside-folder $NODEJS_INSIDE_FOLDER_NAME_WINDOWS
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    export NODEJS_HOME=$DEV_HOME/opt/$folderName
+    unarchivePath=$DEV_HOME/tmp/$folderName
+    installapp --dir $NODEJS_HOME --src $unarchivePath
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    setupapppath --name nodejs --command "export NODEJS_HOME=$NODEJS_HOME; export PATH=\$PATH:\$NODEJS_HOME"
+}
+installOnMacOS() {
+    echo "Can't support!!!"
+    # setupapppath --name nodejs --command "export NODEJS_HOME=$NODEJS_HOME; export PATH=\$PATH:$NODEJS_HOME\bin"
+    # setup_npmrc()
+}
+installOnLinux() {
+    echo "Can't support!!!"
+}
+####
+####
+setup_npmrc() {
+    if [ -f "$NODEJS_HOME/bin/npm" ] && [ ! -f $HOME/.npmrc ]; then
+        mkdir -p $NODEJS_HOME/etc
+        cat $DEV_HOME/etc/npmrc | sed -e "s#\$DEV_HOME#$DEV_HOME#g" > $NODEJS_HOME/etc/npmrc
+    fi
+}
+####
+####
+installFail() {
+    echo "Install failed!!!"
+    exit 1
+}
+
+if [[ $OS_WINDOWS == "Y" ]]; then
+    installonWindows
+elif [[ $OS_MACOS == "Y" ]]; then
+    installOnMacOS
+elif [[ $OS_LINUX == "Y" ]]; then
+    installOnLinux
+fi

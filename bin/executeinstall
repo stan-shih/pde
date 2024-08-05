@@ -13,6 +13,7 @@ usage="pde install <application> [-f <file-or-path>]  -- install application.
          $ pde install gsudo
          $ pde install intellij
          $ pde install maven
+         $ pde install nodejs
          $ pde install vscode
 "
 
@@ -50,6 +51,10 @@ case $1 in
     ;;
   maven)
     $installPath/maven $OFFLINE
+    exit 0
+    ;;
+  nodejs)
+    $installPath/nodejs $OFFLINE
     exit 0
     ;;
   vscode)

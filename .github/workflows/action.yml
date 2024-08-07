@@ -30,7 +30,7 @@ jobs:
         run: ls -al
 
       - name: Excuting pde
-        run: sh ./pde.sh
+        run: source ./bin/pdemain
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script

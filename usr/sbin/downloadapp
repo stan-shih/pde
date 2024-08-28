@@ -14,13 +14,21 @@ while [ $# -gt 0 ]; do
     elif [[ $1 == "--name" ]]; then
         shift
         appName=$1
+    elif [[ $1 == "--file" ]]; then
+        shift
+        localFile=$1
     fi
     shift
 done
 
 if [[ $downloadUrl == "" ]]; then
-    echo "Usage: downloadapp --type <archive-type> --url <download-url> --name <application-name>"
+    echo "Usage: downloadapp --type <archive-type> --url <download-url> --name <application-name> [--file <local-file>]"
     exit 1
+fi
+
+if [[ $localFile != "" ]]; then
+    ## Get the file name from the local file path
+    appName=$(basename $localFile)
 fi
 
 downloadArchivePath="$DEV_HOME/tmp"
@@ -29,7 +37,11 @@ if [[ $archiveType == "zip" ]]; then
     if [[ -f $downloadArchivePath/$appName.zip ]]; then
         rm -rf $downloadArchivePath/$appName.zip
     fi
-    curl -L -o $downloadArchivePath/$appName.zip $downloadUrl
+    if [[ $localFile != "" ]]; then
+        cp $localFile $downloadArchivePath/$appName.zip
+    else
+        curl -L -o $downloadArchivePath/$appName.zip $downloadUrl
+    fi
 elif [[ $archiveType == "exe" ]]; then
     curl -L -o $downloadArchivePath/$appName.exe $downloadUrl
 fi

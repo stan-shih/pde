@@ -25,7 +25,7 @@ setup() {
         rowNum=$(grep -n "pdemain" ~/.bashrc | cut -d ":" -f 1)
     fi
     if [[ $rowNum == '' ]]; then
-        echo -e "pde() {\n    source $1/bin/pdemain \$*\n}\necho \"Can use 'pde' command to Start Portable Development Environment(PDE)\"\n" >> ~/.bashrc
+        echo -e "pde() {\n    source $1/bin/pdemain \$*\n}\necho \"Can use 'pde' command to Start Portable Development Environment(PDE)\"\n" >>~/.bashrc
     else
         newPath=$1
         sed -i "${rowNum}s#\/.*\/bin\/pdemain#${newPath}\/bin\/pdemain#" ~/.bashrc
@@ -47,16 +47,28 @@ run() {
 }
 install() {
     echo "Install Application..."
-    if [[ $1 == "--offline" ]]; then
-        shift
-        executeinstall $1 -f $2
-        return
-    fi
-    executeinstall $1
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+        -f | --offline)
+            if [[ "$2" == "" ]]; then
+                echo "Install Application is fail!!!"
+                return
+            fi
+            file="$2"
+            otherParam="-f $file"
+            shift 2
+            ;;
+        *)
+            application=$1
+            shift 1
+            ;;
+        esac
+    done
+    executeinstall $application $otherParam
 }
 ####
 getEnvOS() {
-    echo $(echo $MACHTYPE|awk -F- '{print $3}')
+    echo $(echo $MACHTYPE | awk -F- '{print $3}')
 }
 osIsWindows() {
     [[ $(getEnvOS) =~ ^msys.*$ ]] && echo "Y" || echo "N"
@@ -93,7 +105,7 @@ if [[ $DEV_HOME == '' ]]; then
     echo "Can't setup Portable Development Environment!!!"
     return
 fi
-if ! declare -F pde > /dev/null; then
+if ! declare -F pde >/dev/null; then
     pde() {
         source $DEV_HOME/bin/pdemain $*
     }

@@ -22,7 +22,7 @@ installonWindows() {
         installFail
         return 1
     fi
-    setupapp --name intellij --command "start $INTELLIJ_HOME/bin/idea64.exe"
+    setupapp --name intellij --command "start $INTELLIJ_HOME/bin/idea64.exe \$*"
 }
 installOnMacOS() {
     installapp -s "IntelliJ IDEA CE.app" -t dmg $INTELLIJ_HOME intellij $INTELLIJ_DOWNLOAD_URL_MACOS

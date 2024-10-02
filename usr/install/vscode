@@ -40,7 +40,7 @@ $VSCODE_HOME/bin/code \$params
 }
 installOnMacOS() {
     folderName=$VSCODE_FOLDER_NAME_MACOS
-    echo "Can't support!!!"
+    downloadPath=$(downloadapp --url $VSCODE_DOWNLOAD_URL_WINDOWS)
 }
 installOnLinux() {
     echo "Can't support!!!"

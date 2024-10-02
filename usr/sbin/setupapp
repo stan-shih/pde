@@ -15,3 +15,5 @@ appBinaryPath=$DEV_HOME/usr/bin/$appBinary
 
 echo "#!/bin/bash" > $appBinaryPath
 echo -e "$appCommand" >> $appBinaryPath
+
+chmod +x $appBinaryPath

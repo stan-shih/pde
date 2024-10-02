@@ -40,7 +40,26 @@ $VSCODE_HOME/bin/code \$params
 }
 installOnMacOS() {
     folderName=$VSCODE_FOLDER_NAME_MACOS
-    downloadPath=$(downloadapp --url $VSCODE_DOWNLOAD_URL_WINDOWS)
+    downloadPath=$(downloadapp --type zip --url $VSCODE_DOWNLOAD_URL_MACOS --name $folderName)
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    echo "Download path: $downloadPath"
+    applicationName="$VSCODE_APPLICATION_NAME_MACOS"
+    unarchiver --src $downloadPath --folder $folderName 
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    export VSCODE_HOME=$DEV_HOME/opt/$folderName
+    unarchivePath=$DEV_HOME/tmp/$folderName
+    installapp --dir $VSCODE_HOME --src $unarchivePath
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    setupapp --name vscode --command "open -a \"$VSCODE_HOME/$applicationName\" \$*"
 }
 installOnLinux() {
     echo "Can't support!!!"

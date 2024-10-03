@@ -1,0 +1,40 @@
+#!/bin/bash
+##
+##
+##
+usage() {
+    echo "Usage: processdmg --src <dmg-path> --folder <application-folder-name> --application-name <application-name>"
+}
+
+while [ $# -gt 0 ]; do
+    if [[ $1 == "unarchive" ]]; then
+        command="unarchive"
+    elif [[ $1 == "--src" ]]; then
+        shift
+        srcDmgFile=$1
+    elif [[ $1 == "--folder" ]]; then
+        shift
+        appFolderName=$1
+    elif [[ $1 == "--application-name" ]]; then
+        shift
+        applicationName=$1
+    fi
+    shift
+done
+
+echo "Mounting dmg..."
+MOUNT_POINT=$(hdiutil attach $srcDmgFile | grep Volumes | cut -f 3)
+
+if [ -d "$MOUNT_POINT/$applicationName" ]; then
+    outputPath="$DEV_HOME/tmp/$appFolderName"
+    if [[ -d $outputPath ]]; then
+        rm -rf $outputPath
+    fi
+
+    mkdir -p $outputPath
+    cp -prf "$MOUNT_POINT/$applicationName" $outputPath
+fi
+hdiutil detach "$MOUNT_POINT"
+
+## Return the path of the unarchived application
+echo "$outputPath"

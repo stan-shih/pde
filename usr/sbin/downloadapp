@@ -44,6 +44,8 @@ if [[ $archiveType == "zip" ]]; then
     fi
 elif [[ $archiveType == "exe" ]]; then
     curl -L -o $downloadArchivePath/$appName.exe $downloadUrl
+elif [[ $archiveType == "dmg" ]]; then
+    curl -L -o $downloadArchivePath/$appName.dmg $downloadUrl
 fi
 
 ## Return the path of the downloaded archive

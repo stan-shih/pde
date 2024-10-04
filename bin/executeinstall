@@ -28,6 +28,7 @@ if [ "$2" == "-f" ]; then
   OFFLINE=$3
 fi
 
+echo "Install $1..."
 case $1 in
   ant)
     $installPath/ant $OFFLINE

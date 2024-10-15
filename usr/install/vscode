@@ -34,7 +34,9 @@ if [[ \"\$1\" != \"\" ]] && [[ -d \"\$1\" ]]; then
 elif [[ -f \"\$1\" ]]; then
     params=\"\$1\"
 fi
+export MSYS_NO_PATHCONV=1
 $VSCODE_HOME/bin/code \$params
+unset MSYS_NO_PATHCONV
 "
     setupapp --name vscode --command "$command"
 }

@@ -14,6 +14,7 @@ usage="pde install <application> [-f <file-or-path>]  -- install application.
          $ pde install intellij
          $ pde install maven
          $ pde install nodejs
+         $ pde install pycharm
          $ pde install vscode
 "
 
@@ -56,6 +57,10 @@ case $1 in
     ;;
   nodejs)
     $installPath/nodejs $OFFLINE
+    exit 0
+    ;;
+  pycharm)
+    $installPath/pycharm $OFFLINE
     exit 0
     ;;
   vscode)

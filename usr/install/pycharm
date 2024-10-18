@@ -1,0 +1,46 @@
+#!/bin/bash
+
+. $DEV_HOME/etc/pycharm.conf
+####
+####
+installonWindows() {
+    echo "Can't support!!!"
+}
+installOnMacOS() {
+    folderName=$PYCHARM_FOLDER_NAME
+    downloadPath=$(downloadapp --type dmg --url $PYCHARM_DOWNLOAD_URL_MACOS --name $folderName)
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    processdmg unarchive --src $downloadPath --folder $folderName --application-name "$PYCHARM_APPLICATION_NAME"
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    export PYCHARM_HOME=$DEV_HOME/opt/$folderName
+    unarchivePath=$DEV_HOME/tmp/$folderName
+    installapp --dir $PYCHARM_HOME --src $unarchivePath
+    if [[ $? != 0 ]]; then
+        installFail
+        return 1
+    fi
+    setupapp --name pycharm --command "open -a \"$PYCHARM_HOME/$PYCHARM_APPLICATION_NAME\" \$*"
+}
+installOnLinux() {
+    echo "Can't support!!!"
+}
+####
+####
+installFail() {
+    echo "Install failed!!!"
+    exit 1
+}
+
+if [[ $OS_WINDOWS == "Y" ]]; then
+    installonWindows
+elif [[ $OS_MACOS == "Y" ]]; then
+    installOnMacOS
+elif [[ $OS_LINUX == "Y" ]]; then
+    installOnLinux
+fi

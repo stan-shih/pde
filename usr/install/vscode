@@ -27,18 +27,7 @@ installonWindows() {
         installFail
         return 1
     fi
-    command="params=
-if [[ \"\$1\" != \"\" ]] && [[ -d \"\$1\" ]]; then
-    cd \$1
-    params=\".\"
-elif [[ -f \"\$1\" ]]; then
-    params=\"\$1\"
-fi
-export MSYS_NO_PATHCONV=1
-$VSCODE_HOME/bin/code \$params
-unset MSYS_NO_PATHCONV
-"
-    setupapp --name vscode --command "$command"
+    setupAppOnWindows
 }
 installOnMacOS() {
     folderName=$VSCODE_FOLDER_NAME_MACOS
@@ -67,11 +56,60 @@ installOnLinux() {
     echo "Can't support!!!"
 }
 ####
+setupAppOnWindows() {
+    command="params=
+if [[ \"\$1\" != \"\" ]] && [[ -d \"\$1\" ]]; then
+    cd \$1
+    params=\".\"
+elif [[ -f \"\$1\" ]]; then
+    params=\"\$1\"
+fi
+export MSYS_NO_PATHCONV=1
+\"$VSCODE_HOME/bin/code\" \$params
+unset MSYS_NO_PATHCONV
+"
+    setupapp --name vscode --command "$command"
+}
+####
+####
+checkAppExist() {
+    type code > /dev/null && echo "Y" || echo "N"
+}
+askSetApp() {
+    if [[ $OS_WINDOWS == "Y" ]]; then
+        VSCODE_HOME="$(cd "$(dirname "$(which code)")/.."; pwd)"
+    fi
+
+    echo -e "Installed Application Path: $VSCODE_HOME\n"
+    read -p "Do you want to use an installed application? [Y/n] " answer
+    if [[ $answer == "Y" ]]; then
+        setApp
+        exit 0
+    fi
+    echo
+    echo Please uninstall the application first!!!
+    exit 1
+}
+setApp() {
+    if [[ $OS_WINDOWS == "Y" ]]; then
+        setupAppOnWindows
+    fi
+    if [[ -f $DEV_HOME/usr/bin/vscode ]]; then
+        echo Set up VS Code is finish.
+    fi
+}
+####
 ####
 installFail() {
     echo "Install failed!!!"
     exit 1
 }
+
+if [[ $(checkAppExist) == "Y" ]]; then
+    echo VS Code is installed.
+    askSetApp
+    exit 0
+fi
 
 if [[ $OS_WINDOWS == "Y" ]]; then
     installonWindows $*

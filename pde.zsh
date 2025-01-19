@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/zsh
 
-if [[ "$SHELL" == "/bin/zsh" ]]; then
+if [[ "$SHELL" == "/bin/bash" ]]; then
     cur=$(pwd)
-    echo "Please execute pde.zsh!!!"
+    echo "Please execute pde.sh!!!"
     exit 1
 fi
-echo PDE execute with bash
+echo PDE execute with zsh
 ##
 ##
 if [[ "$(uname)" = "Darwin" ]]; then
@@ -32,4 +32,4 @@ if [[ -f $PDE_DIR/bin/pdemain ]]; then
     exit 0
 fi
 
-source $PDE_DIR/bin/pdemain $*
+bash --init-file <(echo 'source ~/pde/bin/pdemain')
